@@ -1,22 +1,23 @@
 name: sanskytech-CICD
-	'on':
-	  push:
-		branches:
-		  - master
-	  pull_request:
-		branches:
-		  - master
-	jobs:
-	  build:
+'on':
+  push:
+      branches:
+      - master
+  pull_request:
+      branches:
+      - master
+jobs:
+  build:
 		runs-on: self-hosted
 		steps:
-      - name: Checkout code
-		    uses: actions/checkout@v3
-      - name: build project
-		  - run: |
-			  yarn i 
-        yarn build
-			  # pm2 stop 0
-			  # pm2 start 0 
-			  # pm2 save 
-			  # sudo systemctl restart apache2.service 
+		- name: "Checkout code"
+			uses: actions/checkout@v3
+		- name: "build project"
+			run: |
+					  yarn 
+						yarn build
+				# pm2 stop 0
+				# pm2 start 0 
+				# pm2 save 
+				# sudo systemctl restart apache2.service 
+				
