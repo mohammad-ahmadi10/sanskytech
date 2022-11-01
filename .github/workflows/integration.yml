@@ -19,7 +19,7 @@ jobs:
                 node-version: latest
             - name: build project
               run: |
-                yarn i
+                yarn 
                 yarn build
                 yarn start
 
