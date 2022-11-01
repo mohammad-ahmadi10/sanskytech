@@ -6,18 +6,15 @@ name: sanskytech-CICD
   pull_request:
       branches:
       - master
+
 jobs:
-  build:
-		runs-on: ubuntu-latest
-		steps:
-		- name: Checkout code
-			uses: actions/checkout@v2
-		- name: build project
-			run: |
-					  yarn 
-						yarn build
-				# pm2 stop 0
-				# pm2 start 0 
-				# pm2 save 
-				# sudo systemctl restart apache2.service 
-				
+    build:
+        runs-on: self-hosted
+        steps:
+            - name: checkout 
+              uses: actions/checkout@v3
+            - name: build project
+              run: |
+                yarn
+                yarn build
+            
