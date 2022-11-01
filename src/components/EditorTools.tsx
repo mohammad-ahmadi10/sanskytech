@@ -64,7 +64,7 @@ const getIcon = (Icon:IconType , onIcon:()=>void) =>{
     <div className='bg-none text-white flex flex-row-reverse'>
         
         {getIcon(ImBold , OnBoldClick)}
-        {/* {getIcon(ImItalic)} */}
+        {/* {getIcon(ImItalic)}*/}
 
 
     </div>
