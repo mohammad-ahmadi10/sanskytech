@@ -1,0 +1,11 @@
+@mixin center ($jc:"center" , $fd:"column" , $ai:"initial") {
+    display: flex;
+    justify-content: unquote($jc);
+    flex-direction: unquote($fd);
+    align-items: unquote($ai);
+}
+
+@mixin containerwrapper{
+    @include center(center , column , center);
+    padding: 2em 2em;
+}

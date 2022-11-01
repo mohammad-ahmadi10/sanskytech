@@ -1,0 +1,14 @@
+@use 'index.scss' as *;
+@use 'sass:color';
+
+.active_icon{
+    @include center(right , row , center);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+    flex:0.6;
+    text-align: center;
+}
+
+.icon{
+    color: color.adjust(white , $lightness:-15%);    
+    
+}

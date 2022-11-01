@@ -1,0 +1,70 @@
+@use 'index.scss' as *;
+
+.block_tabs{
+    @include center(flex-start , column , initial);
+}
+
+.tabcontainer{
+    @include center(left , center , left);
+    width: 100%;
+    background-color: white;
+
+}
+
+
+.tab{
+    background: rgba(128, 128, 128, 0.075);
+    text-align: center;
+    color: $primary-font-color;
+    cursor: pointer;
+    padding: 0.5em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+    flex: 0.2;
+
+    &:last-child{
+        border-right: 0.1em solid rgba(0, 0, 0, 0.274);
+        border-left: 0.1em solid rgba(0, 0, 0, 0.274);
+    }
+}
+
+
+.active_tab{
+    @extend .tab;
+    background-color: white;
+    cursor: default;
+    border-bottom: 1px solid transparent;
+    position: relative;
+
+    &::before{
+        content: "";
+        display: block;
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% + 2px);
+        height: 0.3em;
+        background: cyan;
+    }
+}
+
+
+
+.showoff{
+    display: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+}
+
+
+.tapcontent{
+    color: black;
+    display: none;
+
+}
+
+.active_content{
+    @extend .tapcontent;
+    display: block;
+}
+
+

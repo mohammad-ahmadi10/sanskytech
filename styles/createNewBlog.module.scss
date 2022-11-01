@@ -1,0 +1,18 @@
+@import "colors";
+@import "mixins";
+
+.btn {
+    color: $primary_color;
+}
+
+
+.newBlogSectionWrapper{
+    @include containerwrapper;
+}
+
+.createNewBlog{
+    width: 60em;
+    height: 50em;
+    @include center(flex-start , column , initial);
+    
+}
