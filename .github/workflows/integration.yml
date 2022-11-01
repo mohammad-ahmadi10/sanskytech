@@ -1,4 +1,4 @@
-name: sanskytech-cicd
+name: sanskytech-CICD
 	'on':
 	  push:
 		branches:
