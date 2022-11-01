@@ -11,6 +11,8 @@ import EditorTools from './EditorTools';
 
 
 const Editor = ({onEdit , value}:EditorType) => {
+
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   
@@ -91,4 +93,6 @@ const Editor = ({onEdit , value}:EditorType) => {
   )
 }
 
+
+Editor.displayName = 'Editor';
 export default Editor

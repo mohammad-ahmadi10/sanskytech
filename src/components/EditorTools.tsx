@@ -9,29 +9,27 @@ import { makeBold } from './EditorTool/Bolder';
 
 
 
+interface EditorToolsType {
+  textAreaRef: RefObject<HTMLTextAreaElement> ,
+  onEdit: (value:string) => void
+}
 
- interface EditorToolsType {
-    textAreaRef: RefObject<HTMLTextAreaElement> ,
-    onEdit: (value:string) => void
- }
- 
 
-  const getIcon = (Icon:IconType , onIcon:()=>void) =>{
-    return <div className={styles.icon} onClick={_ => onIcon()}>
+const getIcon = (Icon:IconType , onIcon:()=>void) =>{
+  return <div className={styles.icon} onClick={_ => onIcon()}>
             <Icon />
     </div>
   }
-
   
-
+  
+  
   
   
   
   const  EditorTools = forwardRef<HTMLTextAreaElement , EditorToolsType>(({textAreaRef , onEdit}, ref) => {
-    
-      const onNewEditChange = (textAreaRef: RefObject<HTMLTextAreaElement> , newValue:string ) =>{
-        const textarea= textAreaRef.current!;
-        textarea.value = newValue;
+    const onNewEditChange = (textAreaRef: RefObject<HTMLTextAreaElement> , newValue:string ) =>{
+      const textarea= textAreaRef.current!;
+      textarea.value = newValue;
         onEdit(newValue)
        /// textarea.focus();
     }
@@ -75,4 +73,5 @@ import { makeBold } from './EditorTool/Bolder';
 
 
 
+EditorTools.displayName = 'EditorTools';
 export default EditorTools
