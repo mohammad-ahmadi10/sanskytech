@@ -19,7 +19,8 @@ jobs:
                 node-version: latest
             - name: build project
               run: |
-                npm i
-                npm run build
+                yarn i
+                yarn build
+                yarn start
 
 
