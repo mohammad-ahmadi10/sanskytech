@@ -21,6 +21,8 @@ jobs:
               run: |
                 yarn 
                 yarn build
-                yarn start
+                pm2 restart nextjs --update-env
+                pm2 save 
+                sudo systemctl restart apache2.service 
 
 
