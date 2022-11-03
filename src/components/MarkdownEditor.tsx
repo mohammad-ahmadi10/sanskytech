@@ -1,6 +1,6 @@
 import React, { FormEvent, RefObject, useRef, useState } from 'react'
 import { EditorType, textRef } from 'types/createblogtypes';
-import { beforeAfterSelection , exsitsRef, excuteChanges } from '@/src/utils/utilities';
+import { beforeAfterSelection , exsitsRef, executeChanges } from '@/src/utils/utilities';
 import {IconType}  from 'react-icons';
 import styles from "@/styles/MarkEditor.module.scss";
 import { ImBold, ImItalic } from 'react-icons/im';

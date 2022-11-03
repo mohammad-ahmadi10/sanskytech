@@ -1,4 +1,4 @@
-import { isSelectedTextEmpty, excuteChanges } from "@/src/utils/utilities";
+import { isSelectedTextEmpty, executeChanges } from "@/src/utils/utilities";
 import { RefObject } from "react";
 
 

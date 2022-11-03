@@ -57,8 +57,8 @@ export const beforeAfterSelection = ({value , selectionStart , selectionEnd }:Se
   export const isSelectedTextEmpty = (text:string) => text.length === 0;
 
   // select the given a part of a text with the given from and to index
-  export const excuteChanges = (textAreaRef: textRef, from:number,to:number) =>{
-    
+  export const executeChanges = (textAreaRef: textRef, from:number,to:number) =>{
+
     textAreaRef.current!.setSelectionRange(from , to);
     textAreaRef.current!.focus();
   }

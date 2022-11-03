@@ -4,7 +4,7 @@ import { ImItalic } from 'react-icons/im';
 import { IconType } from 'react-icons/lib/esm/iconBase';
 import styles from "@/styles/EditorTools.module.scss";
 import { forwardRef, RefObject, FormEvent } from 'react';
-import { exsitsRef  , beforeAfterSelection, excuteChanges } from '@/src/utils/utilities';
+import { exsitsRef  , beforeAfterSelection, executeChanges } from '@/src/utils/utilities';
 import { makeBold } from './EditorTool/Bolder';
 
 
@@ -50,7 +50,7 @@ const getIcon = (Icon:IconType , onIcon:()=>void) =>{
       const {selectedText , beforeSelection , afterSelection} = getSepretedText(textAreaRef);
       const {newValue , from , to} = makeBold(textAreaRef , selectedText , beforeSelection , afterSelection);
       onNewEditChange(textAreaRef , newValue);
-      excuteChanges(textAreaRef, from , to);
+      executeChanges(textAreaRef, from , to);
     }
 
  }
