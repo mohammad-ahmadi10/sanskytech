@@ -8,7 +8,7 @@ name: sanskytech-CICD
       - master
 
 jobs:
-    build:
+    test:
         runs-on: self-hosted
         steps:
             - name: checkout 

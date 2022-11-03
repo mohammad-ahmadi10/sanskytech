@@ -1,5 +1,4 @@
-@import "colors";
-@import "mixins";
+@use 'index.scss' as *;
 
 .btn {
     color: $primary_color;
@@ -8,6 +7,11 @@
 
 .newBlogSectionWrapper{
     @include containerwrapper;
+    font-size: $small-font;
+
+    @include sm{
+        font-size: $middle-font;
+    }
 }
 
 .createNewBlog{

@@ -1,12 +1,12 @@
 
-import { Post } from '@/types/createblogtypes';
+import { Post, textRef } from '@/types/createblogtypes';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import rehypeHighlight  from 'rehype-highlight';
 import  rehypeSlug  from 'rehype-slug';
 import  rehypeAutoLinkHeadings from 'rehype-autolink-headings';
 import { SelectionType } from '@/types/createblogtypes';
-import { RefObject } from 'react';
+import React,{ RefObject} from 'react';
 
 
 // seperating actual content and its metadata
@@ -57,7 +57,9 @@ export const beforeAfterSelection = ({value , selectionStart , selectionEnd }:Se
   export const isSelectedTextEmpty = (text:string) => text.length === 0;
 
   // select the given a part of a text with the given from and to index
-  export const selectText = (textAreaRef: RefObject<HTMLTextAreaElement>, from:number,to:number) =>{
+  export const excuteChanges = (textAreaRef: textRef, from:number,to:number) =>{
+    
     textAreaRef.current!.setSelectionRange(from , to);
     textAreaRef.current!.focus();
   }
+  

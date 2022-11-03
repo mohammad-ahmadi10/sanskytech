@@ -1,5 +1,6 @@
 
 import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { RefObject } from 'react';
 
 
 export interface SelectionType{
@@ -29,3 +30,7 @@ export interface PostMetadata{
   date: Date,
   excerpt:string 
 }
+
+export type textRef = (
+  RefObject<HTMLTextAreaElement>
+)
