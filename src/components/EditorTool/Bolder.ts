@@ -1,21 +1,17 @@
-import { isSelectedTextEmpty, executeChanges } from "@/src/utils/utilities";
-import { RefObject } from "react";
+import { isSelectedTextEmpty} from "@/src/utils/utilities";
 
 
 
-export const  makeBold =  (textAreaRef:RefObject<HTMLTextAreaElement>  ,selectedText:string , beforeSelection:string , afterSelection:string) =>{
+export const  makeBold =  (selectedText:string , beforeSelection:string , afterSelection:string) =>{
 
     // text is already surrouned by ** **  
     const fromText = beforeSelection.slice(beforeSelection.length -2 , beforeSelection.length );
     const toText = afterSelection.slice(0 , 2);
     
-
-    
     let embededValue = isSelectedTextEmpty(selectedText) ? "Bold text" : selectedText;
-    
+
     let newValue:string;
     let from:number , to:number;
-
     // 
     if(fromText === "**" && toText === "**"){
       newValue = beforeSelection.slice(0 , beforeSelection.length - 2) + embededValue + afterSelection.slice(2, afterSelection.length);
@@ -45,7 +41,5 @@ export const  makeBold =  (textAreaRef:RefObject<HTMLTextAreaElement>  ,selected
       }
       newValue = beforeSelection + embededValue + afterSelection;
     }
-
-    
     return {newValue , from , to};
 }

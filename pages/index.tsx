@@ -1,9 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '@/styles/Home.module.scss'
-import Editor from '@/src/components/MarkdownEditor';
-import CreateNewBlog from './blog/create-new-blog';
+
 import Link from 'next/link';
 /* import { Button } from 'antd';
 import "antd/dist/antd.dark.css" */

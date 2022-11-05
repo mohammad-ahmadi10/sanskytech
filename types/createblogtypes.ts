@@ -34,3 +34,8 @@ export interface PostMetadata{
 export type textRef = (
   RefObject<HTMLTextAreaElement>
 )
+
+export type CommandType ={
+  value: string,
+  selectedRange: [number , number]
+}

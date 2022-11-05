@@ -1,5 +1,5 @@
 
-import { Post, textRef } from '@/types/createblogtypes';
+import { CommandType, Post, textRef } from '@/types/createblogtypes';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import rehypeHighlight  from 'rehype-highlight';
@@ -48,7 +48,7 @@ export const beforeAfterSelection = ({value , selectionStart , selectionEnd }:Se
 
 
   /* checking if a ref exists */
-  export const exsitsRef = (ref:RefObject<HTMLElement>) =>{
+  export const exsitsRef = (ref?:RefObject<HTMLElement>) =>{
     return ref && ref.current;
   }
 
@@ -63,3 +63,17 @@ export const beforeAfterSelection = ({value , selectionStart , selectionEnd }:Se
     textAreaRef.current!.focus();
   }
   
+
+  export const getSepretedText = (textAreaRef:textRef) =>{
+    const {value , selectionStart , selectionEnd } = textAreaRef.current!;
+    const {selectedText , beforeSelection , afterSelection} =  beforeAfterSelection({value , selectionStart , selectionEnd });
+    return {selectedText:selectedText , beforeSelection:beforeSelection , afterSelection:afterSelection};
+  }
+
+  export const applyRechanges = (texteditorRef:textRef, prevVal:CommandType) =>{    
+    texteditorRef.current!.value = prevVal.value;
+    texteditorRef.current!.setSelectionRange(prevVal.selectedRange[0] , prevVal.selectedRange[1]);
+    texteditorRef.current!.focus();
+    return prevVal.value;
+  }
+

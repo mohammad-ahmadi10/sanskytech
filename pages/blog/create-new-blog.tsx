@@ -1,5 +1,3 @@
-import Editor from '@/src/components/MarkdownEditor';
-import MarkdownPreviewer from '@/src/components/MarkdownPreviewer';
 import React, { FormEvent, useState , useCallback } from 'react'
 import Tabs from '../../src/components/tabs/tabs';
 
