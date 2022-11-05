@@ -25,8 +25,6 @@ interface EditorToolsType {
   redo: () => void
   redoHistory: Command[]
   undoHistory: Command[]
-
-
 }
 
 
@@ -74,7 +72,9 @@ const getIcon = (Icon:IconType , onIcon:()=>void , shouldDisable?:boolean) =>{
   
   
   
-  const  EditorTools = forwardRef<HTMLTextAreaElement , EditorToolsType>(({textAreaRef , onEdit, commandExecutor , textareaKeyEvent , undo , redo , redoHistory , undoHistory}, ref) => {
+  const  EditorTools = forwardRef<HTMLTextAreaElement , EditorToolsType>((
+    {textAreaRef , onEdit, commandExecutor , textareaKeyEvent , undo , redo , redoHistory , undoHistory }
+    , ref) => {
     
 
     const onEditorKeydown = () =>{
@@ -120,15 +120,14 @@ const getIcon = (Icon:IconType , onIcon:()=>void , shouldDisable?:boolean) =>{
       commandExecutor(new ItalicCommand(textAreaRef));
     }
 
-    console.log("redo: " + redoHistory.length)
-    console.log("undo: " + undoHistory.length)
+
     
   return (
     <div className='bg-none text-white flex flex-row'>
         
         {getIcon(ImBold , onBold )}
         {getIcon(ImItalic, onItalic)}
-        {getIcon(ImUndo2, undo , undoHistory.length <= 1)}
+        {getIcon(ImUndo2, undo , undoHistory.length === 0)}
         {getIcon(ImRedo2, redo , redoHistory.length === 0)}
 
 

@@ -19,39 +19,49 @@ import { ItalicCommand } from '../pattern/command-pattern/Italic-command';
 const Editor = ({onEdit , value}:EditorType) => {
   
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [initialValue , setInitialValue] = useState<string>("");
+  const [initalValue , setInitalValue] = useState("");
 
   const [textareaKeyEvent , setTextareaKeyEvent] = useState<React.KeyboardEvent<HTMLTextAreaElement>>();
 
 
+  
   const [undoHistory , setUndoHistory] = useState<Command[]>([]);
   const [redoHistory , setRedoHistory] = useState<Command[]>([]);
   
+  useEffect(()=>{
+    if(exsitsRef(textAreaRef))
+      setInitalValue(textAreaRef.current!.value);
+  }, [])
+
+
   // undo redo handling
   const excecuteCommand = (command:Command) =>{
     const newVal = command.execute();
+
     setUndoHistory(prevVal => [...prevVal , command]);
     onEdit(newVal);
   }
+  
   const undo = () => {
+    // let command = undoHistory.length !== 1 ? undoHistory.pop() : undefined;   
     let command =  undoHistory.pop();   
+        
+    if(undoHistory.length === 0){
+      if(textAreaRef.current!.value !== initalValue)
+        onEdit(initalValue);
+    }
 
+    
 
-    if(undoHistory.length === 1){
-      /* excecuteCommand(
-        new UndoCommand(textAreaRef,
-        {value:initialValue, 
-        selectedRange:[textAreaRef.current!.selectionStart , textAreaRef.current!.value.length ]}
-        ))        
-        textAreaRef.current!.blur();
-      return; */
-    } 
-
-      const newVal = command!.undo();
+    if(command){
       setRedoHistory(prevVal => [...prevVal , command!]);
+      let newVal = command!.undo();
       onEdit(newVal);
+    }
 
   }
+
+
   const redo = () =>{
     const command = redoHistory.pop()
     if(!command) return;
@@ -61,7 +71,7 @@ const Editor = ({onEdit , value}:EditorType) => {
   }
 
 
-    useEffect(() => 
+    /* useEffect(() => 
     {
 
       excecuteCommand(
@@ -69,8 +79,7 @@ const Editor = ({onEdit , value}:EditorType) => {
         {value:textAreaRef.current!.value, 
         selectedRange:[0 , textAreaRef.current!.value.length ]}
         ))
-        setInitialValue(textAreaRef.current!.value)
-    }, [])    
+    }, [])   */  
   
 
 
@@ -141,4 +150,5 @@ const Editor = ({onEdit , value}:EditorType) => {
 
 
 Editor.displayName = 'Editor';
-export default Editor
+
+export default Editor;

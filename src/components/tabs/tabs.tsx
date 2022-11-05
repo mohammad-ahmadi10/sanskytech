@@ -13,7 +13,7 @@ import { createMDXPost } from '@/src/utils/utilities';
 const Tabs =  () =>{
     const [toggleState , setToggleState] = useState(1); 
 
-    const [EditorValue , setEditorValue] = useState("");
+    const [EditorValue , setEditorValue] = useState("this is a inital value ");
     const [previewValue , setPreviewValue] = useState<MDXPost>();
 
 
