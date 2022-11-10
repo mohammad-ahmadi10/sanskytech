@@ -1,10 +1,6 @@
 import styles from "@/styles/tabs.module.scss";
 import { useState, FormEvent, useCallback } from 'react';
 
-// icons 
-import {ImBold , ImItalic} from "react-icons/im"
-import { IconContext } from "react-icons";
-import { IconType } from "react-icons/lib/esm/iconBase";
 import Editor from './../MarkdownEditor';
 import MarkdownPreviewer from './../MarkdownPreviewer';
 import { MDXPost } from 'types/createblogtypes';
@@ -24,16 +20,15 @@ const Tabs =  () =>{
     const onPreview = async (e:FormEvent<HTMLDivElement>) =>{
         e.preventDefault()
 
-
         const {source , metadata} = await getPost();
         setPreviewValue({source ,metadata});
         /* setIsEditorMode(preState => !preState); */
     }
     
 
-    const onEdit = (value:string) =>{
+    const onEdit = useCallback((value:string) =>{
         setEditorValue(value);
-    }
+    },[])
 
 
     const onTabClick = (index:number) =>{

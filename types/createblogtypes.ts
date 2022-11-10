@@ -1,6 +1,7 @@
 
 import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { RefObject } from 'react';
+import { useCallback } from 'react';
 
 
 export interface SelectionType{
@@ -8,7 +9,7 @@ export interface SelectionType{
   }
   
 export interface EditorType {
-    onEdit: (value:string) => void
+    onEdit: (value:string) => void // ((value:string) => void
     value: string
 }
 

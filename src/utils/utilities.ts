@@ -43,6 +43,9 @@ export const beforeAfterSelection = ({value , selectionStart , selectionEnd }:Se
     const beforeSelection = value.substring(0 , selectionStart);
     const afterSelection = value.substring(selectionEnd);
     const selectedText = value.substring(selectionStart , selectionEnd);
+    console.log({beforeSelection , afterSelection , selectedText});
+    console.log(beforeSelection.length)
+
     return {selectedText ,beforeSelection , afterSelection};
   }
 
