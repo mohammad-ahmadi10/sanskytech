@@ -1,12 +1,13 @@
 import { IconType } from "react-icons";
 import styles from "@/styles/EditorTools.module.scss";
-import { memo, StrictMode, useEffect } from "react";
+import { memo, StrictMode, useEffect, useState } from "react";
 
 interface EditorIconType {
     Icon: IconType;
     onIcon: () => void;
     shouldDisable?: boolean;
     event?: boolean;
+
 }
 
 const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event }: EditorIconType) => {
@@ -14,7 +15,6 @@ const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event }: EditorIconTyp
     useEffect(() => {
         if(event !== undefined && event){
             onIcon();
-            console.log(onIcon);
         }
     }, [event]);
 

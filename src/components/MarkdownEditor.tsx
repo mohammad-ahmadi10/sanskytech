@@ -178,6 +178,7 @@ const Editor = ({onEdit , value}:EditorType) => {
                 ref={textAreaRef} 
                 name="markeditor" 
                 id="editor" 
+                
                 cols={100} rows={30}
 
                 onFocus={()=>{setInitalValue(val => ({...val , selectedRange:[textAreaRef.current!.selectionStart, textAreaRef.current!.selectionEnd]} ))
