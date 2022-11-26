@@ -20,6 +20,7 @@ jobs:
             - name: build project
               run: |
                 npm install -g yarn 
+                npm install -g pm2 
                 yarn 
                 yarn build
                 pm2 restart nextjs --update-env
