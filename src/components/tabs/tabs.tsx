@@ -1,10 +1,6 @@
 import styles from "@/styles/tabs.module.scss";
 import { useState, FormEvent, useCallback } from 'react';
 
-// icons 
-import {ImBold , ImItalic} from "react-icons/im"
-import { IconContext } from "react-icons";
-import { IconType } from "react-icons/lib/esm/iconBase";
 import Editor from './../MarkdownEditor';
 import MarkdownPreviewer from './../MarkdownPreviewer';
 import { MDXPost } from 'types/createblogtypes';
@@ -13,7 +9,7 @@ import { createMDXPost } from '@/src/utils/utilities';
 const Tabs =  () =>{
     const [toggleState , setToggleState] = useState(1); 
 
-    const [EditorValue , setEditorValue] = useState("");
+    const [EditorValue , setEditorValue] = useState("this is a inital value ");
     const [previewValue , setPreviewValue] = useState<MDXPost>();
 
 
@@ -24,16 +20,15 @@ const Tabs =  () =>{
     const onPreview = async (e:FormEvent<HTMLDivElement>) =>{
         e.preventDefault()
 
-
         const {source , metadata} = await getPost();
         setPreviewValue({source ,metadata});
         /* setIsEditorMode(preState => !preState); */
     }
     
 
-    const onEdit = (value:string) =>{
+    const onEdit = useCallback((value:string) =>{
         setEditorValue(value);
-    }
+    },[])
 
 
     const onTabClick = (index:number) =>{

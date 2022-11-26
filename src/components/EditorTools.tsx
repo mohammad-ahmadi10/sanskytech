@@ -1,71 +1,89 @@
 
-import { ImBold } from 'react-icons/im';
+import { ImBold, ImUndo2 } from 'react-icons/im';
 import { ImItalic } from 'react-icons/im';
-import { IconType } from 'react-icons/lib/esm/iconBase';
-import styles from "@/styles/EditorTools.module.scss";
-import { forwardRef, RefObject, FormEvent } from 'react';
-import { exsitsRef  , beforeAfterSelection, selectText } from '@/src/utils/utilities';
-import { makeBold } from './EditorTool/Bolder';
+import { ImRedo2 } from 'react-icons/im';
+import {FaHashtag} from 'react-icons/fa';
 
+
+import { IconType } from 'react-icons/lib/esm/iconBase';
+import { forwardRef, RefObject } from 'react';
+import { Command } from './../pattern/command-pattern/commands-pattern';
+import { BoldCommand } from './../pattern/command-pattern/Bold-command';
+import { ItalicCommand } from '../pattern/command-pattern/Italic-command';
+import EditorIcon from './EditorIcon';
+
+import styles from "@/styles/EditorTools.module.scss";
+import Heading from './Heading';
 
 
 interface EditorToolsType {
   textAreaRef: RefObject<HTMLTextAreaElement> ,
-  onEdit: (value:string) => void
+  commandExecutor: (command:Command) => void
+  undo: () => void
+  redo: () => void
+  redoHistory: Command[]
+  undoHistory: Command[]
 }
 
 
-const getIcon = (Icon:IconType , onIcon:()=>void) =>{
-  return <div className={styles.icon} onClick={_ => onIcon()}>
-            <Icon />
+const getIcon = (Icon:IconType , onIcon:()=>void , shouldDisable?:boolean) =>{
+
+  return <div className={`${(shouldDisable===true) ? styles.disableIcon  : styles.icon }`} onClick={_ => onIcon()}>
+            <Icon/>
     </div>
   }
-  
-  
-  
-  
-  
-  
-  const  EditorTools = forwardRef<HTMLTextAreaElement , EditorToolsType>(({textAreaRef , onEdit}, ref) => {
-    const onNewEditChange = (textAreaRef: RefObject<HTMLTextAreaElement> , newValue:string ) =>{
-      const textarea= textAreaRef.current!;
-      textarea.value = newValue;
-        onEdit(newValue)
-       /// textarea.focus();
-    }
-    
+
+  const  EditorTools = forwardRef<HTMLTextAreaElement , EditorToolsType>((
+    {textAreaRef , commandExecutor  , undo , redo , redoHistory , undoHistory }
+    , ref) => {
     
 
 
-    const getSepretedText = (textAreaRef:RefObject<HTMLTextAreaElement>) =>{
-      const {value , selectionStart , selectionEnd } = textAreaRef.current!;
-      const {selectedText , beforeSelection , afterSelection} =  beforeAfterSelection({value , selectionStart , selectionEnd });
-      return {selectedText:selectedText , beforeSelection:beforeSelection , afterSelection:afterSelection};
+    const onBold = () =>{
+      commandExecutor(new BoldCommand(textAreaRef));
+    }
+    const onHtag = () =>{
+      console.log("htag");
+
+     // commandExecutor(new ItalicCommand(textAreaRef));
     }
 
 
-    
-  const OnBoldClick = () =>{
-    if(exsitsRef(textAreaRef)){
-      const {selectedText , beforeSelection , afterSelection} = getSepretedText(textAreaRef);
-      const {newValue , from , to} = makeBold(textAreaRef , selectedText , beforeSelection , afterSelection);
-      onNewEditChange(textAreaRef , newValue);
-      selectText(textAreaRef, from , to);
+    const onItalic = () =>{
+      commandExecutor(new ItalicCommand(textAreaRef));
     }
 
- }
 
- 
+    const onHtagHovered = (ishovered:boolean) =>{
+      console.log(ishovered);
+    }
 
 
+
+    const onHeading = (name:string) =>{
+        console.log(name);
+    }
 
 
   return (
-    <div className='bg-none text-white flex flex-row-reverse'>
+    <div className='bg-none text-white flex flex-row'>
         
-        {getIcon(ImBold , OnBoldClick)}
-        {/* {getIcon(ImItalic)}*/}
-
+        <div className={styles.dropdown}>
+        <EditorIcon Icon={FaHashtag} onIcon={onHtag}/>
+              <div className={styles.dropdownContent}>
+                <Heading onHeading={onHeading}  ><h1>Heading 1</h1></Heading>
+                <Heading  ><h2>Heading 2</h2></Heading>
+                <Heading  ><h3>Heading 3</h3></Heading>
+                <Heading  ><h4>Heading 4</h4></Heading>
+                <Heading  ><h5>Heading 5</h5></Heading>
+              </div>
+        </div>
+        <EditorIcon Icon={ImBold}   onIcon={onBold} />
+        <EditorIcon Icon={ImItalic}   onIcon={onItalic} />
+        <EditorIcon Icon={ImUndo2}   onIcon={undo} 
+                     shouldDisable={undoHistory.length === 0} 
+        />
+        <EditorIcon Icon={ImRedo2}   onIcon={redo} shouldDisable={redoHistory.length === 0} />
 
     </div>
   )

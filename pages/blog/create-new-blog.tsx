@@ -1,5 +1,3 @@
-import Editor from '@/src/components/MarkdownEditor';
-import MarkdownPreviewer from '@/src/components/MarkdownPreviewer';
 import React, { FormEvent, useState , useCallback } from 'react'
 import Tabs from '../../src/components/tabs/tabs';
 
@@ -49,7 +47,7 @@ import styles from "@/styles/createNewBlog.module.scss";
 
     return (
         <section className={styles.newBlogSectionWrapper}>
-            <div className={styles.createNewBlog}>
+            <div className={"w-full h-0 md:w-11/12 lg:w-11/12 text-md md:text-xl"}>
 
 
             <Tabs/>

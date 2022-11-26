@@ -1,5 +1,7 @@
 
 import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { RefObject } from 'react';
+import { useCallback } from 'react';
 
 
 export interface SelectionType{
@@ -7,7 +9,7 @@ export interface SelectionType{
   }
   
 export interface EditorType {
-    onEdit: (value:string) => void
+    onEdit: (value:string) => void // ((value:string) => void
     value: string
 }
 
@@ -28,4 +30,13 @@ export interface PostMetadata{
   tags: string[],
   date: Date,
   excerpt:string 
+}
+
+export type textRef = (
+  RefObject<HTMLTextAreaElement>
+)
+
+export type CommandType ={
+  value: string,
+  selectedRange: [number , number]
 }

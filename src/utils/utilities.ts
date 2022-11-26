@@ -1,12 +1,12 @@
 
-import { Post } from '@/types/createblogtypes';
+import { CommandType, Post, textRef } from '@/types/createblogtypes';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import rehypeHighlight  from 'rehype-highlight';
 import  rehypeSlug  from 'rehype-slug';
 import  rehypeAutoLinkHeadings from 'rehype-autolink-headings';
 import { SelectionType } from '@/types/createblogtypes';
-import { RefObject } from 'react';
+import React,{ RefObject} from 'react';
 
 
 // seperating actual content and its metadata
@@ -43,12 +43,15 @@ export const beforeAfterSelection = ({value , selectionStart , selectionEnd }:Se
     const beforeSelection = value.substring(0 , selectionStart);
     const afterSelection = value.substring(selectionEnd);
     const selectedText = value.substring(selectionStart , selectionEnd);
+    console.log({beforeSelection , afterSelection , selectedText});
+    console.log(beforeSelection.length)
+
     return {selectedText ,beforeSelection , afterSelection};
   }
 
 
   /* checking if a ref exists */
-  export const exsitsRef = (ref:RefObject<HTMLElement>) =>{
+  export const exsitsRef = (ref?:RefObject<HTMLElement>) =>{
     return ref && ref.current;
   }
 
@@ -57,7 +60,23 @@ export const beforeAfterSelection = ({value , selectionStart , selectionEnd }:Se
   export const isSelectedTextEmpty = (text:string) => text.length === 0;
 
   // select the given a part of a text with the given from and to index
-  export const selectText = (textAreaRef: RefObject<HTMLTextAreaElement>, from:number,to:number) =>{
+  export const executeChanges = (textAreaRef: textRef, from:number,to:number) =>{
+
     textAreaRef.current!.setSelectionRange(from , to);
     textAreaRef.current!.focus();
   }
+  
+
+  export const getSepretedText = (textAreaRef:textRef) =>{
+    const {value , selectionStart , selectionEnd } = textAreaRef.current!;
+    const {selectedText , beforeSelection , afterSelection} =  beforeAfterSelection({value , selectionStart , selectionEnd });
+    return {selectedText:selectedText , beforeSelection:beforeSelection , afterSelection:afterSelection};
+  }
+
+  export const applyRechanges = (texteditorRef:textRef, prevVal:CommandType) =>{    
+    texteditorRef.current!.value = prevVal.value;
+    texteditorRef.current!.setSelectionRange(prevVal.selectedRange[0] , prevVal.selectedRange[1]);
+    texteditorRef.current!.focus();
+    return prevVal.value;
+  }
+
