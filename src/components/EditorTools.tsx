@@ -6,7 +6,7 @@ import {FaHashtag} from 'react-icons/fa';
 
 
 import { IconType } from 'react-icons/lib/esm/iconBase';
-import { forwardRef, RefObject } from 'react';
+import { forwardRef, RefObject, useState } from 'react';
 import { Command } from './../pattern/command-pattern/commands-pattern';
 import { BoldCommand } from './../pattern/command-pattern/Bold-command';
 import { ItalicCommand } from '../pattern/command-pattern/Italic-command';
@@ -27,7 +27,6 @@ interface EditorToolsType {
 
 
 const getIcon = (Icon:IconType , onIcon:()=>void , shouldDisable?:boolean) =>{
-
   return <div className={`${(shouldDisable===true) ? styles.disableIcon  : styles.icon }`} onClick={_ => onIcon()}>
             <Icon/>
     </div>
@@ -38,6 +37,7 @@ const getIcon = (Icon:IconType , onIcon:()=>void , shouldDisable?:boolean) =>{
     , ref) => {
     
 
+    const [isHeadingSelected , setIsHeadingSelected] = useState(false);
 
     const onBold = () =>{
       commandExecutor(new BoldCommand(textAreaRef));
@@ -54,23 +54,23 @@ const getIcon = (Icon:IconType , onIcon:()=>void , shouldDisable?:boolean) =>{
     }
 
 
-    const onHtagHovered = (ishovered:boolean) =>{
-      console.log(ishovered);
-    }
-
 
 
     const onHeading = (name:string) =>{
+
+      setIsHeadingSelected(true);
         console.log(name);
+
+        setTimeout(() => {setIsHeadingSelected(false);}, 250);
     }
 
 
   return (
     <div className='bg-none text-white flex flex-row'>
         
-        <div className={styles.dropdown}>
+        <div /* onMouseLeave={_=> setIsHeadingSelected(false)} */ className={styles.dropdown}>
         <EditorIcon Icon={FaHashtag} onIcon={onHtag}/>
-              <div className={styles.dropdownContent}>
+              <div className={`${isHeadingSelected ? styles.dropdownDisapear : styles.dropdownContent}`}>
                 <Heading onHeading={onHeading}  ><h1>Heading 1</h1></Heading>
                 <Heading  ><h2>Heading 2</h2></Heading>
                 <Heading  ><h3>Heading 3</h3></Heading>

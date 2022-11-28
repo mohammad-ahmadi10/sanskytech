@@ -8,16 +8,18 @@
     color: rgba(255, 255, 255, 0.467);
 }
 
+
+.dropdownDisapear{
+    display:none;
+}
+
 .dropdownContent {
     display: none;
     flex-direction: column;
-
     position: absolute;
     background-color: black;
     min-width: max-content;
 }
-
-
 
 .dropdown {
     position: relative;
@@ -26,8 +28,6 @@
         flex-direction: column;
     }
 }
-
-
 
 
 .dropdown-content a:hover {background-color: #ddd;}

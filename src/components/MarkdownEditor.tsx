@@ -14,10 +14,11 @@ const Editor = ({onEdit , value}:EditorType) => {
   
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const linesContainer = useRef<HTMLDivElement>(null);
-  const numberOfLines = useRef<number>(1);
 
 
   const [initalValue , setInitalValue] = useState<CommandType>({value:"", selectedRange:[0,0]});
+  const [numberOfLines, setNumberOfLines] = useState<number>(1);
+  const [activeLine, setActiveLine] = useState<number>(1);
 
  
 
@@ -46,8 +47,11 @@ const Editor = ({onEdit , value}:EditorType) => {
       if(undoHistory.length === 0)  // if undo history is empty then set the inital value
         setInitalValue({value:newVal, selectedRange:[textAreaRef.current!.selectionStart , textAreaRef.current!.selectionEnd]});
       // onEdit(newVal);
-      const numberOflines = newVal.split("\n").length;
-      addLineNumbers(numberOflines);
+      const lines = newVal.split("\n").length;
+      if(numberOfLines !== lines){
+        addLineNumbers(lines);
+        setNumberOfLines(lines);
+      }
       onEdit(newVal);
     }
   };
@@ -60,13 +64,26 @@ const Editor = ({onEdit , value}:EditorType) => {
     
     setUndoHistory(prevVal => [...prevVal , command])
 
-    const numberOflines = value.split("\n").length;
-    addLineNumbers(numberOflines);
+    const lines = value.split("\n").length;
+    if(numberOfLines !== lines){
+      addLineNumbers(lines);
+      setNumberOfLines(lines);
+    }
+
     onEdit(value);
   };
   
   
-  const onTextareaChange = (e:FormEvent<HTMLTextAreaElement>) =>{
+  const onTextareaChange = (e:React.ChangeEvent<HTMLTextAreaElement>) =>{;
+    // create span for each line
+    const lines = e.currentTarget.value.split("\n").length
+
+    if(numberOfLines !== lines){
+      
+      calculateActiveLine();
+      setNumberOfLines(lines);
+    }
+
     const {value} = e.currentTarget as HTMLTextAreaElement;
     if(value[value.length-1] === " " || value[value.length-1] === "\n"){   
       excecuteCommand(new UndoCommand(textAreaRef, initalValue));
@@ -79,23 +96,29 @@ const Editor = ({onEdit , value}:EditorType) => {
 
 
 
-  const addLineNumbers = (numberOflines:number) =>{
-    linesContainer.current!.innerHTML = 
-    Array(numberOflines).fill('<span></span>').join('');
+  const addLineNumbers = (numberOflines:number , activeLine?:number) =>{
+    linesContainer.current!.innerHTML = ""
+    for(let i = 1; i <= numberOflines; i++){
+      const span = document.createElement("span");
+      span.className = 'before:text-gray-400';
+      if(i === activeLine){
+        span.className = 'before:text-black';
+      }
+      linesContainer.current!.appendChild(span);
+    }
   }
 
 
-  const onEditorKeyUp = (e:React.KeyboardEvent<HTMLTextAreaElement>) =>{
-    // if (numberOfLines.current === textAreaRef.current!.value.split('\n').length) return;
-    const numberOflines = e.currentTarget.value.split("\n").length;
-     // create span for each line
-     console.log(numberOflines);
-     addLineNumbers(numberOflines);
-  }
 
+  const calculateActiveLine = () =>{
+    const line = textAreaRef.current!.value.substring(0, textAreaRef.current!.selectionStart).split("\n").length;
+    setActiveLine(line);
+    addLineNumbers(textAreaRef.current!.value.split('\n').length,line);
+  }
 
   const onEditorKeydown = (e: React.KeyboardEvent<HTMLTextAreaElement>) =>{
     if(e === undefined) return;
+
     if(e.key === "Tab" ){
       e.preventDefault()
       const newValue = handleTab();
@@ -104,15 +127,19 @@ const Editor = ({onEdit , value}:EditorType) => {
       onEdit( newValue);
     }
     
+    if(e.key === "ArrowUp" || e.key === "narowup" || e.key === "ArrowDown" || e.key === 'narowdown'){
+      setActiveLine(activeLine);
+    }
+
     if(e.ctrlKey &&  e.key === "z"){
       e.preventDefault()
       undo();
     }
+    
     if(e.altKey &&  e.key === "z"){
       e.preventDefault()
       redo();
     }
-
 
     if(e.ctrlKey && e.key === "b"){
       e.preventDefault()
@@ -185,23 +212,33 @@ const Editor = ({onEdit , value}:EditorType) => {
 
 
 
-      <div className='border-solid border-2 border-cyan-500  
-                      shadow-md shadow-cyan-500 rounded-b-md mt-1  
+      <div className=' 
                       box-border flex   leading-10
+                      shadow-lg 
                        '>
 
 
-        <div ref={linesContainer}  className={styles.lineNumber}>
-          <span></span>
+        <div ref={linesContainer}  className={`${styles.lineNumber} 
+        bg-white border-r-gray-200 border-r shadow-inner 
+        w-20
+        `}>
+          <span className='before:text-gray-400 '></span>
         </div>
         <textarea
                 className="
-                w-full h-50 text-white resize-none outline-none rounded-b-md pl-2
-                font-mono leading-10
+                w-full h-50  resize-none outline-none rounded-b-md pl-2
+                font-mono leading-10 
+                focus:border-solid
+                focus:border-2 
+                focus:border-cyan-500 
+                focus:shadow-md 
+                focus:shadow-cyan-500 
+                focus:rounded-b-md 
                 "
                 wrap='off'
                 onKeyDown={onEditorKeydown} 
-                onKeyUp={onEditorKeyUp}
+                onMouseUp={_ => calculateActiveLine() }
+                onKeyUp={_ => calculateActiveLine() }
                 value={value} 
                 onChange={onTextareaChange} 
                 ref={textAreaRef} 
