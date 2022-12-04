@@ -22,7 +22,7 @@ const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event }: EditorIconTyp
     return    <StrictMode>
 
     
-    <div className={`${(shouldDisable===true) ? styles.disableIcon  : styles.icon }`} onClick={_ => onIcon()}>
+    <div className={`${(shouldDisable===true) ? styles.disableIcon  : styles.icon }`} onClick={e => {e.preventDefault(); onIcon()}}>
               <Icon/>
       </div>
     </StrictMode>
@@ -30,3 +30,6 @@ const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event }: EditorIconTyp
 
 
 export default EditorIcon;
+
+
+

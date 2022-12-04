@@ -48,8 +48,9 @@ const Editor = ({onEdit , value}:EditorType) => {
         setInitalValue({value:newVal, selectedRange:[textAreaRef.current!.selectionStart , textAreaRef.current!.selectionEnd]});
       // onEdit(newVal);
       const lines = newVal.split("\n").length;
+      const line = initalValue.value.substring(0, initalValue.selectedRange[0]).split("\n").length;
       if(numberOfLines !== lines){
-        addLineNumbers(lines);
+        addLineNumbers(lines , line-1);
         setNumberOfLines(lines);
       }
       onEdit(newVal);
@@ -60,27 +61,28 @@ const Editor = ({onEdit , value}:EditorType) => {
   const redo = () =>{
     const command = redoHistory.pop()
     if(!command) return;
-    const value = command!.redo();
+    const newVal = command!.redo();
     
     setUndoHistory(prevVal => [...prevVal , command])
 
-    const lines = value.split("\n").length;
-    if(numberOfLines !== lines){
-      addLineNumbers(lines);
-      setNumberOfLines(lines);
-    }
 
-    onEdit(value);
+    const lines = newVal.split("\n").length;
+      const line = initalValue.value.substring(0, initalValue.selectedRange[0]).split("\n").length;
+      if(numberOfLines !== lines){
+        addLineNumbers(lines , line+1);
+        setNumberOfLines(lines);
+      }
+
+    onEdit(newVal);
   };
   
   
-  const onTextareaChange = (e:React.ChangeEvent<HTMLTextAreaElement>) =>{;
+  const onTextareaChange = (e:React.ChangeEvent<HTMLTextAreaElement>) =>{
     // create span for each line
     const lines = e.currentTarget.value.split("\n").length
 
+
     if(numberOfLines !== lines){
-      
-      calculateActiveLine();
       setNumberOfLines(lines);
     }
 
@@ -96,28 +98,54 @@ const Editor = ({onEdit , value}:EditorType) => {
 
 
 
+  
+
   const addLineNumbers = (numberOflines:number , activeLine?:number) =>{
+
     linesContainer.current!.innerHTML = ""
-    for(let i = 1; i <= numberOflines; i++){
+    for (let index = 1; index <= numberOflines; index++) {
       const span = document.createElement("span");
-      span.className = 'before:text-gray-400';
-      if(i === activeLine){
-        span.className = 'before:text-black';
+      span.className = "text-black";
+      if(activeLine === index){
+        console.log("activeLine: ", activeLine);
+        console.log("line: ", index);
+
+        span.className = "text-red-500";
+
       }
-      linesContainer.current!.appendChild(span);
+        linesContainer.current!.appendChild(span);
     }
-  }
+
+    /* linesContainer.current!.innerHTML = Array(numberOflines).fill(`<span 
+    class=${activeLine !== undefined ? 'text-red-500' : 'text-black'}
+    ></span>`)
+    .join(''); */
+  };
 
 
 
   const calculateActiveLine = () =>{
     const line = textAreaRef.current!.value.substring(0, textAreaRef.current!.selectionStart).split("\n").length;
+    
     setActiveLine(line);
     addLineNumbers(textAreaRef.current!.value.split('\n').length,line);
+
   }
 
   const onEditorKeydown = (e: React.KeyboardEvent<HTMLTextAreaElement>) =>{
     if(e === undefined) return;
+
+    if(e.key === "Enter"){
+      e.currentTarget.scrollIntoView({behavior: "smooth", block: "start", inline:"end"});
+      console.log("" + e.currentTarget.scrollTop)
+      linesContainer.current!.scrollTop = e.currentTarget.scrollTop;
+
+      /* calculateActiveLine();
+      handleScroll(e); */
+
+    }
+
+
 
     if(e.key === "Tab" ){
       e.preventDefault()
@@ -180,20 +208,12 @@ const Editor = ({onEdit , value}:EditorType) => {
 
 
   
-
-  /* const onBold = useCallback(() =>{
-    excecuteCommand(new BoldCommand(textAreaRef));
-  },[]);
-
-  const onItalic = useCallback(() =>{
-    excecuteCommand(new ItalicCommand(textAreaRef));
-  },[]); */
-
-
-
+  const handleScroll = (e:React.UIEvent<HTMLTextAreaElement>) => {
+    linesContainer.current!.scrollTop = e.currentTarget.scrollTop;
+  }
 
   return (
-    <div className='w-full'>
+    <div className='w-full overflow-hidden'>
 
       <IconContext.Provider value={{size:"25"}}>
       <EditorTools 
@@ -206,27 +226,21 @@ const Editor = ({onEdit , value}:EditorType) => {
           /> 
           </IconContext.Provider>
 
-
-
-
-
-
-
       <div className=' 
                       box-border flex   leading-10
-                      shadow-lg 
-                       '>
+                      shadow-lg'>
 
 
         <div ref={linesContainer}  className={`${styles.lineNumber} 
         bg-white border-r-gray-200 border-r shadow-inner 
-        w-20
+        w-20 y-20 overflow-hidden
+        max-h-[740px]
         `}>
           <span className='before:text-gray-400 '></span>
         </div>
         <textarea
                 className="
-                w-full h-50  resize-none outline-none rounded-b-md pl-2
+                w-full y-20 resize-none outline-none rounded-b-md pl-2
                 font-mono leading-10 
                 focus:border-solid
                 focus:border-2 
@@ -234,24 +248,25 @@ const Editor = ({onEdit , value}:EditorType) => {
                 focus:shadow-md 
                 focus:shadow-cyan-500 
                 focus:rounded-b-md 
+                bg-fixed overflow-auto 
+                max-h-[740px]
+
                 "
+                onScroll={handleScroll}
                 wrap='off'
                 onKeyDown={onEditorKeydown} 
-                onMouseUp={_ => calculateActiveLine() }
-                onKeyUp={_ => calculateActiveLine() }
+                onMouseUp={_ =>  calculateActiveLine()  }
+                onKeyUp={ _=> calculateActiveLine() }
                 value={value} 
                 onChange={onTextareaChange} 
                 ref={textAreaRef} 
                 name="markeditor" 
                 id="editor" 
-                
-                cols={100} rows={30}
-
+                rows={20}
                 onFocus={()=>{setInitalValue(val => ({...val , selectedRange:[textAreaRef.current!.selectionStart, textAreaRef.current!.selectionEnd]} ))
               }}
                 >  
         </textarea>
-
         </div>
     </div>
   )
@@ -261,3 +276,6 @@ const Editor = ({onEdit , value}:EditorType) => {
 Editor.displayName = 'Editor';
 
 export default Editor;
+
+
+

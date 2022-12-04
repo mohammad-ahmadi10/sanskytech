@@ -26,12 +26,6 @@ interface EditorToolsType {
 }
 
 
-const getIcon = (Icon:IconType , onIcon:()=>void , shouldDisable?:boolean) =>{
-  return <div className={`${(shouldDisable===true) ? styles.disableIcon  : styles.icon }`} onClick={_ => onIcon()}>
-            <Icon/>
-    </div>
-  }
-
   const  EditorTools = forwardRef<HTMLTextAreaElement , EditorToolsType>((
     {textAreaRef , commandExecutor  , undo , redo , redoHistory , undoHistory }
     , ref) => {
