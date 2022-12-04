@@ -10,7 +10,7 @@ import Image from 'next/image';
 const MarkdownPreviewer = ({value}:MarkDownPreviewerType) => {
 
   return (
-    <div className=" text-white p-2 border-t-2 border-cyan-500 mt-1 ">
+    <div className=" text-black p-2 border-t-2 border-cyan-500 mt-1 bg-white ">
        {
         typeof value !== "undefined" ? 
         <MDXRemote {...value!.source} components={{Image}}/>
