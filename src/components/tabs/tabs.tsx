@@ -6,10 +6,50 @@ import MarkdownPreviewer from './../MarkdownPreviewer';
 import { MDXPost } from 'types/createblogtypes';
 import { createMDXPost } from '@/src/utils/utilities';
 
+const initailValue = `
+---
+__Advertisement :)__
+
+- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image
+  resize in browser.
+- __[babelfish](https://github.com/nodeca/babelfish/)__ - developer friendly
+  i18n with plurals support and easy syntax.
+
+You will like those projects!
+
+---
+
+# h1 Heading 8-)
+## h2 Heading
+### h3 Heading
+#### h4 Heading
+##### h5 Heading
+###### h6 Heading
+
+
+## Horizontal Rules
+___
+
+---
+
+***
+
+
+## Typographic replacements
+
+Enable typographer option to see result.
+
+(c) (C) (r) (R) (tm) (TM) (p) (P) +-
+
+test.. test... test..... test?..... test!....
+`; 
+
+
+
 const Tabs =  () =>{
     const [toggleState , setToggleState] = useState(1); 
 
-    const [EditorValue , setEditorValue] = useState("this is a inital value ");
+    const [EditorValue , setEditorValue] = useState(initailValue);
     const [previewValue , setPreviewValue] = useState<MDXPost>();
 
 
@@ -31,6 +71,9 @@ const Tabs =  () =>{
     },[])
 
 
+    const onSaveClick = async () =>{
+        console.log("save");
+    }
     const onTabClick = (index:number) =>{
         setToggleState(index);
     }
@@ -50,8 +93,14 @@ const Tabs =  () =>{
                 >Preview
                 </div>
                 
-                {/* <div className={`${amIClicked(2) ? styles.active_icon : styles.showoff}`}>
-                </div> */}
+                <div className={`ml-auto w-40 h-auto cursor-pointer rounded bg-sky-500 shadow-md shadow-cyan-500/40 text-center  flex items-center justify-center 
+                                hover:bg-sky-500/90 hover:shadow-md hover:shadow-cyan-500/50 hover:text-white text-white/80`}
+                     onClick={(_) =>{ onSaveClick()}}                
+                >
+                    <span>
+                    SAVE
+                    </span>
+                </div>
 
             </div>
 

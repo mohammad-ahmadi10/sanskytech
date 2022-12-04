@@ -1,4 +1,4 @@
-import React, { FormEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FormEvent, RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { CommandType, EditorType, textRef } from 'types/createblogtypes';
 import  {IconContext}  from 'react-icons';
 import EditorTools from './EditorTools';
@@ -108,19 +108,10 @@ const Editor = ({onEdit , value}:EditorType) => {
       const span = document.createElement("span");
       span.className = "text-gray-400";
       if(activeLine === index){
-        console.log("activeLine: ", activeLine);
-        console.log("line: ", index);
-
         span.className = "text-black";
-
       }
         linesContainer.current!.appendChild(span);
     }
-
-    /* linesContainer.current!.innerHTML = Array(numberOflines).fill(`<span 
-    class=${activeLine !== undefined ? 'text-red-500' : 'text-black'}
-    ></span>`)
-    .join(''); */
   };
 
 
@@ -132,6 +123,13 @@ const Editor = ({onEdit , value}:EditorType) => {
     addLineNumbers(textAreaRef.current!.value.split('\n').length,line);
 
   }
+
+  useEffect(()=>{
+    if(exsitsRef(textAreaRef)){
+      addLineNumbers(textAreaRef.current!.value.split('\n').length);
+    }
+  },[])
+
 
   useEffect( () =>{
     linesContainer.current!.scrollTop = textAreaRef.current!.scrollTop; 
