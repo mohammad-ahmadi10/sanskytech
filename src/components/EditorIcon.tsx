@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import styles from "@/styles/EditorTools.module.scss";
-import { memo, StrictMode, useEffect, useState } from "react";
+import { memo, StrictMode, useEffect } from "react";
 
 interface EditorIconType {
     Icon: IconType;
@@ -22,8 +22,8 @@ const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event }: EditorIconTyp
     return    <StrictMode>
 
     
-    <div className={`${(shouldDisable===true) ? styles.disableIcon  : styles.icon }`} onClick={e => {e.preventDefault(); onIcon()}}>
-              <Icon/>
+    <div onClick={e => {e.preventDefault(); onIcon()}}>
+              <Icon  className={(shouldDisable && shouldDisable===true ) ? 'fill-black/30' : 'fill-black/60'}/>
       </div>
     </StrictMode>
 });
