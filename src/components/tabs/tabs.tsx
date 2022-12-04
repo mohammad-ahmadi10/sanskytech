@@ -93,8 +93,9 @@ const Tabs =  () =>{
                 >Preview
                 </div>
                 
-                <div className={`ml-auto w-40 h-auto cursor-pointer rounded bg-sky-500 shadow-md shadow-cyan-500/40 text-center  flex items-center justify-center 
-                                hover:bg-sky-500/90 hover:shadow-md hover:shadow-cyan-500/50 hover:text-white text-white/80`}
+                <div className={`ml-auto w-20 h-auto cursor-pointer rounded bg-sky-500 shadow-md shadow-cyan-500/40 text-center  flex items-center justify-center 
+                                hover:bg-sky-500/90 hover:shadow-md hover:shadow-cyan-500/50 hover:text-white text-white/80
+                                `}
                      onClick={(_) =>{ onSaveClick()}}                
                 >
                     <span>

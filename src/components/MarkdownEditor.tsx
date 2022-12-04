@@ -139,7 +139,7 @@ const Editor = ({onEdit , value}:EditorType) => {
     if(e === undefined) return;
 
     if(e.key === "Enter"){
-      e.currentTarget.scrollIntoView({behavior: "smooth", block: "end", inline:"start"});      
+      //e.currentTarget.scrollIntoView({behavior: "smooth", block: "end", inline:"start"});      
       calculateActiveLine();
       handleScroll(e);
     }
@@ -227,13 +227,13 @@ const Editor = ({onEdit , value}:EditorType) => {
           </IconContext.Provider>
 
       <div className=' 
-                      box-border flex   leading-10
+                      box-border flex leading-5  sm:leading-8   md:leading-10 
                       shadow-lg'>
 
 
         <div ref={linesContainer}  className={`${styles.lineNumber} 
         bg-white border-r-gray-200 border-r shadow-inner 
-        w-20 y-20 overflow-hidden
+        w-10 sm:20 y-20 overflow-hidden
         max-h-[740px]
         `}>
           <span className='before:text-gray-400 '></span>
@@ -241,7 +241,8 @@ const Editor = ({onEdit , value}:EditorType) => {
         <textarea
                 className="
                 w-full y-20 resize-none outline-none rounded-b-md pl-2
-                font-mono leading-10 
+                font-mono 
+                leading-5 md:leading-10 sm:leading-8
                 focus:border-solid
                 focus:border-2 
                 focus:border-cyan-500 
@@ -250,7 +251,7 @@ const Editor = ({onEdit , value}:EditorType) => {
                 focus:rounded-b-md 
                 bg-fixed overflow-auto 
                 max-h-[740px]
-
+                text-sm sm:text-base
                 "
                 onScroll={handleScroll}
                 wrap='off'
