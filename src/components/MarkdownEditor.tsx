@@ -50,6 +50,7 @@ const Editor = ({onEdit , value}:EditorType) => {
       const lines = newVal.split("\n").length;
       const line = initalValue.value.substring(0, initalValue.selectedRange[0]).split("\n").length;
       if(numberOfLines !== lines){
+        console.log("lines changed" +  (line-1));
         addLineNumbers(lines , line-1);
         setNumberOfLines(lines);
       }
@@ -105,12 +106,12 @@ const Editor = ({onEdit , value}:EditorType) => {
     linesContainer.current!.innerHTML = ""
     for (let index = 1; index <= numberOflines; index++) {
       const span = document.createElement("span");
-      span.className = "text-black";
+      span.className = "text-gray-400";
       if(activeLine === index){
         console.log("activeLine: ", activeLine);
         console.log("line: ", index);
 
-        span.className = "text-red-500";
+        span.className = "text-black";
 
       }
         linesContainer.current!.appendChild(span);
@@ -132,18 +133,19 @@ const Editor = ({onEdit , value}:EditorType) => {
 
   }
 
+  useEffect( () =>{
+    linesContainer.current!.scrollTop = textAreaRef.current!.scrollTop; 
+  })
+
   const onEditorKeydown = (e: React.KeyboardEvent<HTMLTextAreaElement>) =>{
     if(e === undefined) return;
 
     if(e.key === "Enter"){
-      e.currentTarget.scrollIntoView({behavior: "smooth", block: "start", inline:"end"});
-      console.log("" + e.currentTarget.scrollTop)
-      linesContainer.current!.scrollTop = e.currentTarget.scrollTop;
-
-      /* calculateActiveLine();
-      handleScroll(e); */
-
+      e.currentTarget.scrollIntoView({behavior: "smooth", block: "end", inline:"start"});      
+      calculateActiveLine();
+      handleScroll(e);
     }
+
 
 
 
