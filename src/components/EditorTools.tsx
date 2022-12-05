@@ -1,7 +1,6 @@
 
-import { ImBold, ImUndo2 } from 'react-icons/im';
-import { ImItalic } from 'react-icons/im';
-import { ImRedo2 } from 'react-icons/im';
+import {FaUndo , FaRedo} from "react-icons/fa";
+import { ImBold, ImItalic } from 'react-icons/im';
 import {FaHashtag} from 'react-icons/fa';
 
 
@@ -60,7 +59,7 @@ interface EditorToolsType {
 
 
   return (
-    <div className='bg-none text-white flex flex-row'>
+    <div className='bg-slate-200 text-white flex flex-row items-center sticky top-[34px] sm:top-[49px]  h-10 mt-2 border border-slate-800 border-solid border-y-0'>
         
         <div /* onMouseLeave={_=> setIsHeadingSelected(false)} */ className={styles.dropdown}>
         <EditorIcon Icon={FaHashtag} onIcon={onHtag}/>
@@ -74,10 +73,13 @@ interface EditorToolsType {
         </div>
         <EditorIcon Icon={ImBold}   onIcon={onBold} />
         <EditorIcon Icon={ImItalic}   onIcon={onItalic} />
-        <EditorIcon Icon={ImUndo2}   onIcon={undo} 
+        <div className='m-auto mr-10 flex justify-center items-center '>
+
+        <EditorIcon Icon={FaUndo}   onIcon={undo} 
                      shouldDisable={undoHistory.length === 0} 
-        />
-        <EditorIcon Icon={ImRedo2}   onIcon={redo} shouldDisable={redoHistory.length === 0} />
+                     />
+        <EditorIcon Icon={FaRedo}   onIcon={redo} shouldDisable={redoHistory.length === 0} />
+                     </div>
 
     </div>
   )

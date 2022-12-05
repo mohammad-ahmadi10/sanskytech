@@ -213,9 +213,9 @@ const Editor = ({onEdit , value}:EditorType) => {
   }
 
   return (
-    <div className='w-full overflow-hidden'>
+    <div className='w-full '>
 
-      <IconContext.Provider value={{size:"25"}}>
+      <IconContext.Provider value={{size:"20"}}>
       <EditorTools 
           textAreaRef={textAreaRef} 
           commandExecutor={excecuteCommand}
@@ -228,13 +228,13 @@ const Editor = ({onEdit , value}:EditorType) => {
 
       <div className=' 
                       box-border flex leading-5  sm:leading-8   md:leading-10 
-                      shadow-lg'>
+                      shadow-lg border border-slate-900 border-solid border-t-0'>
 
 
         <div ref={linesContainer}  className={`${styles.lineNumber} 
         bg-white border-r-gray-200 border-r shadow-inner 
         w-10 sm:20 y-20 overflow-hidden
-        max-h-[740px]
+        max-h-[630px]
         `}>
           <span className='before:text-gray-400 '></span>
         </div>
@@ -250,7 +250,7 @@ const Editor = ({onEdit , value}:EditorType) => {
                 focus:shadow-cyan-500 
                 focus:rounded-b-md 
                 bg-fixed overflow-auto 
-                max-h-[740px]
+                max-h-[630px]
                 text-sm sm:text-base
                 "
                 onScroll={handleScroll}

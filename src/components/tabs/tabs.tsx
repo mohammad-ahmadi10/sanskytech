@@ -81,9 +81,9 @@ const Tabs =  () =>{
     const amIClicked = (index:number) =>  index === toggleState;
     
     return (
-        <section className={styles.block_tabs}>
+        <section className={/* styles.block_tabs */ "w-full h-full md:w-11/12 lg:w-11/12 text-md md:text-xl max-w-screen-xl"}>
 
-            <div className={styles.tabcontainer}>
+            <div className={`${styles.tabcontainer} sticky top-0`}>
                 <div onClick={() => onTabClick(1)} 
                      className={`${amIClicked(1) ? styles.active_tab  : styles.tab}`}
                 >Editor
