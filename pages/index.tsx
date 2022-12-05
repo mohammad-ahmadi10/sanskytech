@@ -19,7 +19,6 @@ const Home: NextPage = () => {
 
         <main>
           <Link href="/blog/create-new-blog">
-            
             <span className='px-3 py-3 bg-blue-500 rounded-sm hover:bg-sky-700' >
               <span >New Blog</span> 
             </span>

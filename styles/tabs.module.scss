@@ -2,6 +2,7 @@
 
 .block_tabs{
     @include center(flex-start , column , initial);
+    
 }
 
 .tabcontainer{
@@ -9,7 +10,8 @@
     width: 100%;
     background-color: white;
     font-size: small-font;
-
+    /* position: fixed;
+    top: 20px; */
     @include sm{
         font-size: middle-font;
     }

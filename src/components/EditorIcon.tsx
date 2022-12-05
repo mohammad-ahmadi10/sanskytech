@@ -19,13 +19,11 @@ const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event }: EditorIconTyp
     }, [event]);
 
 
-    return    <StrictMode>
-
-    
-    <div onClick={e => {e.preventDefault(); onIcon()}}>
-              <Icon  className={(shouldDisable && shouldDisable===true ) ? 'fill-black/30' : 'fill-black/60'}/>
-      </div>
-    </StrictMode>
+    return (
+        <div className='m-1 my-0' onClick={e => {e.preventDefault(); onIcon()}}>
+                  <Icon  className={(shouldDisable && shouldDisable===true ) ? 'fill-black/30 ' : 'fill-black/60 cursor-pointer'}/>
+          </div>
+        )
 });
 
 

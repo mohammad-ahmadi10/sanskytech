@@ -47,24 +47,8 @@ import styles from "@/styles/createNewBlog.module.scss";
 
     return (
         <section className={styles.newBlogSectionWrapper}>
-            <div className={"w-full h-full md:w-11/12 lg:w-11/12 text-md md:text-xl max-w-screen-xl"}>
-
-
-            <Tabs/>
-
-                {/* <input 
-                       className={styles.btn}
-                       type={"button"} 
-                       onClick={onPreview} 
-                       value={isEditorMode ? "Preview" : "Editor"}  
-                /> */}
-            </div>
-            
-            {/* {isEditorMode ? 
-                    <Editor onEdit={onEdit} value={EditorValue} />
-                : 
-                    <MarkdownPreviewer value={previewValue}/>
-            } */}
+                <Tabs/>
+                
         </section>
     )
 }
