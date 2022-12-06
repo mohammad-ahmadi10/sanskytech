@@ -6,11 +6,16 @@
 
 
 .newBlogSectionWrapper{
-    @include containerwrapper;
-    font-size: $small-font;
+
+    @include lg{
+        @include containerwrapper;
+        font-size: $small-font;
+
+    }
     /* min-height: 10000px; */
     @include sm{
         font-size: $middle-font;
+
     }
 }
 

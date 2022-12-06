@@ -73,7 +73,7 @@ interface EditorToolsType {
         </div>
         <EditorIcon Icon={ImBold}   onIcon={onBold} />
         <EditorIcon Icon={ImItalic}   onIcon={onItalic} />
-        <div className='m-auto mr-10 flex justify-center items-center '>
+        <div className='m-auto mr-5 sm:mr-10 flex justify-center items-center '>
 
         <EditorIcon Icon={FaUndo}   onIcon={undo} 
                      shouldDisable={undoHistory.length === 0} 
