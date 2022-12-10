@@ -7,6 +7,9 @@ import { MDXPost } from 'types/createblogtypes';
 import { createMDXPost } from '@/src/utils/utilities';
 
 const initailValue = `
+<Image alt="image" src={"https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg"}
+width={260}
+height={56} layout='responsive' />
 ---
 __Advertisement :)__
 

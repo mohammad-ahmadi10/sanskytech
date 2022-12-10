@@ -7,21 +7,23 @@ interface EditorIconType {
     onIcon: () => void;
     shouldDisable?: boolean;
     event?: boolean;
+    styles?: string;
 
 }
 
-const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event }: EditorIconType) => {
+const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event , styles}: EditorIconType) => {
 
-    useEffect(() => {
+    /* useEffect(() => {
         if(event !== undefined && event){
             onIcon();
         }
-    }, [event]);
+    }, [event]); */
 
 
     return (
-        <div className='m-1 my-0' onClick={e => {e.preventDefault(); onIcon()}}>
-                  <Icon  className={(shouldDisable && shouldDisable===true ) ? 'fill-black/30 ' : 'fill-black/60 cursor-pointer'}/>
+        <div className={`m-1 my-0 ${styles}`} onClick={e => {e.preventDefault(); onIcon()}}
+        >
+                  <Icon  className={(shouldDisable && shouldDisable===true ) ? 'fill-black/30 ' : 'fill-black/60 cursor-pointer pointer-events-none'}/>
           </div>
         )
 });

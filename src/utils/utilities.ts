@@ -67,10 +67,11 @@ export const beforeAfterSelection = ({value , selectionStart , selectionEnd }:Se
   export const getSepretedText = (textAreaRef:textRef) =>{
     const {value , selectionStart , selectionEnd } = textAreaRef.current!;
     const {selectedText , beforeSelection , afterSelection} =  beforeAfterSelection({value , selectionStart , selectionEnd });
-    return {selectedText:selectedText , beforeSelection:beforeSelection , afterSelection:afterSelection};
+    return {selectedText:selectedText , beforeSelection:beforeSelection ,
+       afterSelection:afterSelection , selectionStart:selectionStart , selectionEnd:selectionEnd};
   }
 
-  export const applyRechanges = (texteditorRef:textRef, prevVal:CommandType) =>{    
+  export const applyRechanges = (texteditorRef:textRef, prevVal:CommandType) =>{  
     texteditorRef.current!.value = prevVal.value;
     texteditorRef.current!.setSelectionRange(prevVal.selectedRange[0] , prevVal.selectedRange[1]);
     texteditorRef.current!.focus();

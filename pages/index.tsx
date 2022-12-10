@@ -4,6 +4,7 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.scss'
 
 import Link from 'next/link';
+import { Notifi } from '@/src/utils/noti';
 /* import { Button } from 'antd';
 import "antd/dist/antd.dark.css" */
 
