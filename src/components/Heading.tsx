@@ -7,8 +7,16 @@ interface HeadingType {
 
 
 const Heading = ({children , onHeading}:HeadingType)  =>{
+
+  const handleOnClick = (e:React.MouseEvent<HTMLDivElement>) =>{
+    const name = (e.currentTarget.childNodes[0] as HTMLHeadElement).innerHTML;
+    if(onHeading)
+    onHeading(name);
+  }
+
+
   return (
-    <div className={styles.heading} onClick={e=> onHeading ? onHeading((e.currentTarget.childNodes[0] as HTMLHeadElement).innerHTML) : console.log("no function")}>{children}</div>
+    <div className={styles.heading} onClick={e=>  handleOnClick(e)}>{children}</div>
   )
 }
 

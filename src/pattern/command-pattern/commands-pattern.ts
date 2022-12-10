@@ -12,6 +12,12 @@
     selectedRange: [number , number]
   }
 
+export type ImageContentType = {
+    url:string,
+    alt:string,
+    width:number,
+    height:number
+}
 
 export interface Command {
     execute(): string;

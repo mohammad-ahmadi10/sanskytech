@@ -40,7 +40,7 @@ const Editor = ({onEdit , value}:EditorType) => {
   };
 
   const undo = () => {
-    let command =  undoHistory.pop();   
+    let command =  undoHistory.pop();  
     if(command){
       setRedoHistory(prevVal => [...prevVal , command!]);
       let newVal = command!.undo();
@@ -82,16 +82,19 @@ const Editor = ({onEdit , value}:EditorType) => {
     // create span for each line
     const lines = e.currentTarget.value.split("\n").length
 
+    
+
 
     if(numberOfLines !== lines){
       setNumberOfLines(lines);
     }
 
     const {value} = e.currentTarget as HTMLTextAreaElement;
-    if(value[value.length-1] === " " || value[value.length-1] === "\n"){   
-      excecuteCommand(new UndoCommand(textAreaRef, initalValue));
-      setInitalValue({value:textAreaRef.current!.value, selectedRange:[textAreaRef.current!.selectionStart , textAreaRef.current!.selectionEnd]});
-    }
+    
+   /*  if(value[value.length-1] === " " || value[value.length-1] === "\n"){  
+      
+     
+    } */
     // onEdit(value)
     onEdit(value);
   } 
@@ -118,7 +121,6 @@ const Editor = ({onEdit , value}:EditorType) => {
 
   const calculateActiveLine = () =>{
     const line = textAreaRef.current!.value.substring(0, textAreaRef.current!.selectionStart).split("\n").length;
-    
     setActiveLine(line);
     addLineNumbers(textAreaRef.current!.value.split('\n').length,line);
 
@@ -133,17 +135,22 @@ const Editor = ({onEdit , value}:EditorType) => {
 
   useEffect( () =>{
     linesContainer.current!.scrollTop = textAreaRef.current!.scrollTop; 
+    calculateActiveLine();
   })
 
   const onEditorKeydown = (e: React.KeyboardEvent<HTMLTextAreaElement>) =>{
     if(e === undefined) return;
 
     if(e.key === "Enter"){
-      //e.currentTarget.scrollIntoView({behavior: "smooth", block: "end", inline:"start"});      
       calculateActiveLine();
       handleScroll(e);
     }
 
+
+    if (e.key === "Enter" || e.key === "Spacebar" || e.key === " ") {
+      excecuteCommand(new UndoCommand(textAreaRef, initalValue));
+      setInitalValue({value:textAreaRef.current!.value, selectedRange:[textAreaRef.current!.selectionStart , textAreaRef.current!.selectionEnd]});
+    }
 
 
 
@@ -252,6 +259,7 @@ const Editor = ({onEdit , value}:EditorType) => {
                 bg-fixed overflow-auto 
                 max-h-[630px]
                 text-sm sm:text-base
+                bg-white
                 "
                 onScroll={handleScroll}
                 wrap='off'
