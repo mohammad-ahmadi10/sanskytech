@@ -3,6 +3,7 @@ import {FaUndo , FaRedo} from "react-icons/fa";
 import { ImBold, ImItalic } from 'react-icons/im';
 import {FaHashtag} from 'react-icons/fa';
 import {BiImageAdd} from 'react-icons/bi';
+import {BsYoutube} from 'react-icons/bs';
 
 
 import { forwardRef, RefObject, useRef, useState } from 'react';
@@ -18,6 +19,7 @@ import { ImageCommand } from './../pattern/command-pattern/Image-command';
 import { ImageContentType } from '@/src/pattern/command-pattern/commands-pattern';
 import { Notifi } from "../utils/noti";
 import { toast } from 'react-toastify';
+import { YoutubeCommand } from './../pattern/command-pattern/Youtube-command';
 
 
 
@@ -38,18 +40,28 @@ interface EditorToolsType {
 
     const heightRef = useRef<HTMLInputElement>(null);
     const widthRef = useRef<HTMLInputElement>(null);
-    const urlRef = useRef<HTMLInputElement>(null);
+    const imgUrlRef = useRef<HTMLInputElement>(null);
+    const youtubeUrlRef = useRef<HTMLInputElement>(null);
+
     const altRef = useRef<HTMLInputElement>(null);
 
-    const [isBtnDisabled , setIsBtnDisabled] = useState(true);
+    
+    
+    const [isImgBtnDisabled , setIsImgBtnDisabled] = useState(true);
+    const [isYoutubeBtnDisabled , setIsYoutubeBtnDisabled] = useState(true);
 
     const [isHeadingSelected , setIsHeadingSelected] = useState(false);
 
-    const shouldButtonDisabled = (v:string) => {
-      const found = (urlRef.current!.value).match(/(https?:\/\/.*\.(jpeg|jpg|gif|png))/i) != null;
-
-      setIsBtnDisabled(v.length === 0 || !found);
+    const shouldImgBtnDisabled = (v:string) => {
+      const found = (imgUrlRef.current!.value).match(/(https?:\/\/.*\.(jpeg|jpg|gif|png))/i) != null;
+      setIsImgBtnDisabled(v.length === 0 || !found);
     }
+
+    const shouldYoutubeBtnDisabled = (v:string) => {
+      const found = (youtubeUrlRef.current!.value).match( /(.*?)(^|\/|v=)([a-z0-9_-]{11})(.*)?/i) != null;
+      setIsYoutubeBtnDisabled(v.length === 0 || !found);
+    }
+
 
     const onBold = () =>{
       commandExecutor(new BoldCommand(textAreaRef));
@@ -67,17 +79,17 @@ interface EditorToolsType {
 
     }
 
-    const onImage = () =>{
-      //commandExecutor(new ImageCommand(textAreaRef));
+    const onYoutubeAdd = ()=>{
+      commandExecutor(new YoutubeCommand(textAreaRef, youtubeUrlRef.current!.value ));
     }
-    
+
 
     const onImageAdd = () =>{
-      if(urlRef.current!.value && altRef.current!.value && heightRef.current!.value && widthRef.current!.value){
+      if(imgUrlRef.current!.value && altRef.current!.value && heightRef.current!.value && widthRef.current!.value){
 
 
         const imageContent:ImageContentType = {
-          url: urlRef.current!.value,
+          url: imgUrlRef.current!.value,
           alt: altRef.current!.value,
           height: +heightRef.current!.value,
           width: +widthRef.current!.value
@@ -133,11 +145,15 @@ interface EditorToolsType {
         <EditorIcon Icon={ImBold}   onIcon={onBold} />
         <EditorIcon Icon={ImItalic}   onIcon={onItalic} />
         <label htmlFor="image-popup" className="btn btn-ghost hover:unused ">
-          <EditorIcon styles={"pointer-events-none"}  Icon={BiImageAdd}  onIcon={onImage} />
+          <EditorIcon styles={"pointer-events-none"}  Icon={BiImageAdd} />
+        </label>
+        <label htmlFor="youtube-popup" className="btn btn-ghost hover:unused ">
+          <EditorIcon styles={"pointer-events-none"}  Icon={BsYoutube} />
         </label>
 
-        <div className='m-auto mr-5 sm:mr-10 flex justify-center items-center '>
 
+        
+        <div className='m-auto mr-5 sm:mr-10 flex justify-center items-center '>
         <EditorIcon Icon={FaUndo}   onIcon={undo} 
                      shouldDisable={undoHistory.length === 0} 
                      />
@@ -152,29 +168,46 @@ interface EditorToolsType {
 <label htmlFor="image-popup" className="modal cursor-pointer">
   <label className="modal-box relative" htmlFor="">
     <label htmlFor="url" className="text-md label-text text-white font-bold">put the url of the Image</label>
-    <input onChange={e=> shouldButtonDisabled(e.currentTarget.value)} ref={urlRef} id="url" type="text" defaultValue={"https://"} placeholder="https://" required className="input w-full max-w-lg h-min" />
+    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={imgUrlRef} id="url" type="text" defaultValue={"https://"} placeholder="https://" required className="input w-full max-w-lg h-min" />
     <label htmlFor="url" className="text-md label-text text-white font-bold">Alt of Image</label>
-    <input onChange={e=> shouldButtonDisabled(e.currentTarget.value)} ref={altRef} id="url" type="text" defaultValue={"image"} placeholder="image" className="input w-full max-w-lg h-min" />
+    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={altRef} id="url" type="text" defaultValue={"image"} placeholder="image" className="input w-full max-w-lg h-min" />
     <div className="flex align-center justify-between">
       <div>
     <label htmlFor="width" className="label-text label text-md font-bold text-white">Width</label>
-    <input onChange={e=> shouldButtonDisabled(e.currentTarget.value)} ref={widthRef} id="width" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20" />
+    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={widthRef} id="width" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20" />
       </div>
     <div className="mb-2">
 
     <label htmlFor="height" className="label-text label text-md font-bold text-white">height</label>
-    <input onChange={e=> shouldButtonDisabled(e.currentTarget.value)} ref={heightRef} id="height" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20" />
+    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={heightRef} id="height" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20" />
     </div>
     <div></div>
     </div>
 
     <button
-     disabled={isBtnDisabled}
+     disabled={isImgBtnDisabled}
      id="add-image"
      className="btn btn-active btn-accent" onClick={onImageAdd}>Add Image</button>
   </label>
 </label>
     {/* Ende Image Popup */}
+
+    {/* Youtube Popup */}
+    <input type="checkbox" id="youtube-popup" className="modal-toggle" />
+<label htmlFor="youtube-popup" className="modal cursor-pointer">
+  <label className="modal-box relative" htmlFor="">
+    <label htmlFor="url" className="text-md label-text text-white font-bold">put the url of the video</label>
+    <input onChange={e=> shouldYoutubeBtnDisabled(e.currentTarget.value)} ref={youtubeUrlRef} 
+      id="url" type="text" defaultValue={"https://www.youtube.com/watch?v="} placeholder="https://www.youtube.com/watch?v="
+     required className="input w-full max-w-lg h-min mt-5 " />
+
+    <button
+     disabled={isYoutubeBtnDisabled}
+     id="add-youtube"
+     className="btn btn-active btn-accent mt-5" onClick={onYoutubeAdd}>Add Youtube</button>
+  </label>
+</label>
+
 
 
 

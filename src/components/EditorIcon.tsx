@@ -4,7 +4,7 @@ import { memo, StrictMode, useEffect } from "react";
 
 interface EditorIconType {
     Icon: IconType;
-    onIcon: () => void;
+    onIcon?: () => void;
     shouldDisable?: boolean;
     event?: boolean;
     styles?: string;
@@ -21,7 +21,7 @@ const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event , styles}: Edito
 
 
     return (
-        <div className={`m-1 my-0 ${styles}`} onClick={e => {e.preventDefault(); onIcon()}}
+        <div className={`m-1 my-0 ${styles}`} onClick={e => {e.preventDefault(); if(onIcon) onIcon()}}
         >
                   <Icon  className={(shouldDisable && shouldDisable===true ) ? 'fill-black/30 ' : 'fill-black/60 cursor-pointer pointer-events-none'}/>
           </div>
