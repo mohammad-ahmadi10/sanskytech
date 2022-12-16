@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 
+
+
+ 
 @layer base {
   h1 {
     @apply text-2xl;
@@ -27,8 +30,48 @@
   h6{
     @apply text-xs;
   }
-  
+
+  .animThemeColor{
+    animation: anim-theme 1s ease-in-out 1;
+    -webkit-animation: anim-theme 1s ease 1;
+    z-index: 10000;    
+  }
+  .noOverflow{
+    overflow: hidden;
+  }
+
+      
+      @keyframes anim-theme {
+        0% {
+          -webkit-transform: scale(10);
+                  transform: scale(10);
+          -webkit-transform-origin: 100% 0%;
+                  transform-origin: 100% 0%;
+                  opacity: 1;
+ /*                  width: 10px;
+                  height: 10px;
+                  top: 0;
+                  right: -200px; */
+        }
+        100% {
+          -webkit-transform: scale(50);
+                  transform: scale(50);
+          -webkit-transform-origin: 100% 0%;
+                  transform-origin: 100% 0%;
+                  opacity: 0;
+/*                   width: 100vw;
+                  height: 100vh;
+                  top: 0;
+                  right: -200px; */
+
+        }
+      }
+
 }
+
+
+
+
 .btn {
   @apply hover:bg-transparent;
 }
@@ -76,4 +119,3 @@ a {
   }
 }
  */
-

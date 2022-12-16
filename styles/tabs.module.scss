@@ -48,7 +48,8 @@
         top: -5px;
         left: 50%;
         transform: translateX(-50%);
-        width: calc(100% + 2px);
+        width: calc(95% + 2px);
+        border-radius: 50%;
         height: 0.3em;
         background: cyan;
     }

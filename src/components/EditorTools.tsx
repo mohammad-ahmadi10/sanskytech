@@ -6,6 +6,7 @@ import {BiImageAdd} from 'react-icons/bi';
 import {BsYoutube} from 'react-icons/bs';
 
 
+
 import { forwardRef, RefObject, useRef, useState } from 'react';
 import { Command } from './../pattern/command-pattern/commands-pattern';
 import { BoldCommand } from './../pattern/command-pattern/Bold-command';
@@ -30,11 +31,13 @@ interface EditorToolsType {
   redo: () => void
   redoHistory: Command[]
   undoHistory: Command[]
+  onSelectChange: () => void
+
 }
 
 
   const  EditorTools = forwardRef<HTMLTextAreaElement , EditorToolsType>((
-    {textAreaRef , commandExecutor  , undo , redo , redoHistory , undoHistory }
+    {textAreaRef , commandExecutor  , undo , redo , redoHistory , undoHistory, onSelectChange}
     , ref) => {
     
 
@@ -44,8 +47,8 @@ interface EditorToolsType {
     const youtubeUrlRef = useRef<HTMLInputElement>(null);
 
     const altRef = useRef<HTMLInputElement>(null);
+    const imagePos = useRef<HTMLInputElement>(null);
 
-    
     
     const [isImgBtnDisabled , setIsImgBtnDisabled] = useState(true);
     const [isYoutubeBtnDisabled , setIsYoutubeBtnDisabled] = useState(true);
@@ -87,12 +90,23 @@ interface EditorToolsType {
     const onImageAdd = () =>{
       if(imgUrlRef.current!.value && altRef.current!.value && heightRef.current!.value && widthRef.current!.value){
 
+         const radioLabels = imagePos.current!.children;
+         let ImagePosition = 'right';
+
+         for(let index=0;index< radioLabels.length;index++){
+            const radioLabel = radioLabels[index];
+            if((radioLabel.children[1] as HTMLInputElement).checked){
+              ImagePosition = (radioLabel.children[0] as HTMLSpanElement).innerHTML;
+              break;
+            }
+         }
 
         const imageContent:ImageContentType = {
           url: imgUrlRef.current!.value,
           alt: altRef.current!.value,
           height: +heightRef.current!.value,
-          width: +widthRef.current!.value
+          width: +widthRef.current!.value,
+          position: ImagePosition
         };
 
       commandExecutor(new ImageCommand(textAreaRef, imageContent));
@@ -129,8 +143,18 @@ interface EditorToolsType {
       }
     }
 
+   
+
   return (
-    <div className='bg-slate-200 text-white flex flex-row items-center sticky top-[34px] sm:top-[49px]  h-10 mt-2 border border-slate-800 border-solid border-y-0'>
+    <div className='bg-slate-200 dark:bg-transparent text-white flex flex-row 
+                    items-center sticky top-[34px] 
+                    sm:top-[49px]  h-10 mt-2
+                    z-[1000]
+                  
+
+                    '
+    >
+                      
         <div /* onMouseLeave={_=> setIsHeadingSelected(false)} */ className={styles.dropdown}>
           <Notifi />
         <EditorIcon Icon={FaHashtag} onIcon={onHtag}/>
@@ -164,25 +188,45 @@ interface EditorToolsType {
 
     {/* Image Popup */}
 {/* Put this part before </body> tag */}
-<input type="checkbox" id="image-popup" className="modal-toggle" />
+<div className="relative z-1000000" >
+<input onClick={_ => onSelectChange()} type="checkbox" id="image-popup" className="modal-toggle" />
 <label htmlFor="image-popup" className="modal cursor-pointer">
   <label className="modal-box relative" htmlFor="">
-    <label htmlFor="url" className="text-md label-text text-white font-bold">put the url of the Image</label>
+    <label htmlFor="url" className="text-md label-text font-bold">put the url of the Image</label>
     <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={imgUrlRef} id="url" type="text" defaultValue={"https://"} placeholder="https://" required className="input w-full max-w-lg h-min" />
-    <label htmlFor="url" className="text-md label-text text-white font-bold">Alt of Image</label>
+    <label htmlFor="url" className="text-md label-text font-bold">Alt of Image</label>
     <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={altRef} id="url" type="text" defaultValue={"image"} placeholder="image" className="input w-full max-w-lg h-min" />
     <div className="flex align-center justify-between">
       <div>
-    <label htmlFor="width" className="label-text label text-md font-bold text-white">Width</label>
+    <label htmlFor="width" className="label-text label text-md font-bold">Width</label>
     <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={widthRef} id="width" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20" />
       </div>
     <div className="mb-2">
 
-    <label htmlFor="height" className="label-text label text-md font-bold text-white">height</label>
+    <label htmlFor="height" className="label-text label text-md font-bold">height</label>
     <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={heightRef} id="height" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20" />
     </div>
     <div></div>
     </div>
+
+    {/* radio  */}
+
+      <div ref={imagePos} className="form-control " style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
+        <label className="label cursor-pointer w-20">
+          <span className="label-text">Left</span> 
+          <input onChange={console.log} type="radio" name="radio-10" className="radio checked:bg-blue-500"  checked />
+        </label>
+        <label className="label cursor-pointer w-20 ">
+          <span className="label-text">Center</span> 
+          <input onChange={console.log} type="radio" name="radio-10" className="radio checked:bg-red-500"  checked />
+        </label>
+
+        <label className="label cursor-pointer w-20">
+          <span className="label-text">Right</span> 
+          <input onChange={console.log} type="radio" name="radio-10" className="radio checked:bg-green-500" checked />
+        </label>
+      </div>
+
 
     <button
      disabled={isImgBtnDisabled}
@@ -190,10 +234,11 @@ interface EditorToolsType {
      className="btn btn-active btn-accent" onClick={onImageAdd}>Add Image</button>
   </label>
 </label>
+  </div>
     {/* Ende Image Popup */}
 
     {/* Youtube Popup */}
-    <input type="checkbox" id="youtube-popup" className="modal-toggle" />
+    <input onClick={_ => onSelectChange()} type="checkbox" id="youtube-popup" className="modal-toggle" />
 <label htmlFor="youtube-popup" className="modal cursor-pointer">
   <label className="modal-box relative" htmlFor="">
     <label htmlFor="url" className="text-md label-text text-white font-bold">put the url of the video</label>

@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { Notifi } from '@/src/utils/noti';
 /* import { Button } from 'antd';
 import "antd/dist/antd.dark.css" */
+import Layout from './Layout';
+
 
 
 const Home: NextPage = () => {
@@ -18,6 +20,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+        <Layout>
+
         <main>
           <Link href="/blog/create-new-blog">
             <span className='px-3 py-3 bg-blue-500 rounded-sm hover:bg-sky-700' >
@@ -25,6 +29,7 @@ const Home: NextPage = () => {
             </span>
           </Link>
         </main>
+        </Layout>
      </div>
   )
 }
