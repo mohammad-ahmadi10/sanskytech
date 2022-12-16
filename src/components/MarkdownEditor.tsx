@@ -1,4 +1,4 @@
-import React, { FormEvent, RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { FormEvent, RefObject, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { CommandType, EditorType, textRef } from 'types/createblogtypes';
 import  {IconContext}  from 'react-icons';
 import EditorTools from './EditorTools';
@@ -8,6 +8,8 @@ import { UndoCommand } from '../pattern/command-pattern/undo-command';
 import { ItalicCommand } from '../pattern/command-pattern/Italic-command';
 import { beforeAfterSelection, exsitsRef } from '@/src/utils/utilities';
 import styles from "@/styles/MarkEditor.module.scss";
+import CreatableSelect  from '@/src/components/CostumSelect';
+import { GlobalContext } from '../context/state';
 
 
 const Editor = ({onEdit , value}:EditorType) => {
@@ -19,8 +21,13 @@ const Editor = ({onEdit , value}:EditorType) => {
   const [initalValue , setInitalValue] = useState<CommandType>({value:"", selectedRange:[0,0]});
   const [numberOfLines, setNumberOfLines] = useState<number>(1);
   const [activeLine, setActiveLine] = useState<number>(1);
+  const [shouldSelectDisapear, setShouldSelectDisapear] = useState<boolean>(false);
 
  
+  const themeContext = useContext(GlobalContext);
+  const [tags, setTags] = useState<string[]>([]);
+  
+
 
   
   const [undoHistory , setUndoHistory] = useState<Command[]>([]);
@@ -214,7 +221,18 @@ const Editor = ({onEdit , value}:EditorType) => {
   };
 
 
-  
+  const onSelectChange = () =>{
+    setShouldSelectDisapear(
+      v => {
+        if(v){
+          return false;
+        }else{
+          return true;
+        }
+      }
+    )
+  } 
+
   const handleScroll = (e:React.UIEvent<HTMLTextAreaElement>) => {
     linesContainer.current!.scrollTop = e.currentTarget.scrollTop;
   }
@@ -230,9 +248,15 @@ const Editor = ({onEdit , value}:EditorType) => {
           redo={redo}
           redoHistory={redoHistory}
           undoHistory={undoHistory}
+          onSelectChange={onSelectChange}
           /> 
           </IconContext.Provider>
 
+      <div id='tagcontainer' className={`flex flex-col  ${shouldSelectDisapear ? "hidden" : "block"}`}>
+        
+        <CreatableSelect/>
+      </div>
+      
       <div className=' 
                       box-border flex leading-5  sm:leading-8   md:leading-10 
                       shadow-lg border border-slate-900 border-solid border-t-0'>
@@ -242,6 +266,7 @@ const Editor = ({onEdit , value}:EditorType) => {
         bg-white border-r-gray-200 border-r shadow-inner 
         w-10 sm:20 y-20 overflow-hidden
         max-h-[630px]
+        dark:bg-[#1e1e1e]
         `}>
           <span className='before:text-gray-400 '></span>
         </div>
@@ -260,6 +285,9 @@ const Editor = ({onEdit , value}:EditorType) => {
                 max-h-[630px]
                 text-sm sm:text-base
                 bg-white
+                dark:bg-[#1e1e1e]
+                dark:text-white
+
                 "
                 onScroll={handleScroll}
                 wrap='off'

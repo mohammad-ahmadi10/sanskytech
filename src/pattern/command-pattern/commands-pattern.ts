@@ -16,7 +16,8 @@ export type ImageContentType = {
     url:string,
     alt:string,
     width:number,
-    height:number
+    height:number,
+    position:string
 }
 
 export interface Command {

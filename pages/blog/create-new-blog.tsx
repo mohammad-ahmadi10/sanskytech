@@ -5,6 +5,7 @@ import { MDXPost} from 'types/createblogtypes';
 import "highlight.js/styles/atom-one-dark.css";
 import { createMDXPost } from '@/src/utils/utilities';
 import styles from "@/styles/createNewBlog.module.scss";
+import Layout from 'pages/Layout';
 
 
     
@@ -45,11 +46,18 @@ import styles from "@/styles/createNewBlog.module.scss";
                 })
     " */
 
+   
+
     return (
+        <Layout>
+
         <section className={styles.newBlogSectionWrapper}>
+         
                 <Tabs/>
                 
         </section>
+        </Layout>
+        
     )
 }
 

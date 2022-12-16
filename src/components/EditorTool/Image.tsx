@@ -1,8 +1,8 @@
 import { ImageContentType } from "@/src/pattern/command-pattern/commands-pattern";
 
 
-const getImage = ({url, alt, width , height}:ImageContentType) => {
-    return `<Image alt="${alt}" src="${url}" width={${width}} height={${height}} />`
+const getImage = ({url, alt, width , height, position}:ImageContentType) => {
+    return `<Image alt="${alt}" src="${url}" width={${width}} height={${height}} position={"${position}"} />`
     
 }
 

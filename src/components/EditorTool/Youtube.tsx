@@ -19,6 +19,11 @@ export const addYoutube = (url:string , beforeSelection:string , afterSelection:
 }
 
 function extractId(url: string) {
-     const id = url.split("v=")[1];
+     let id = url.split("v=")[1];
+     console.log(id)
+
+     if(id === undefined){
+        id = url.split("youtu.be/")[1];
+     }
      return id;
 }

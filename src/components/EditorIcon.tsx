@@ -23,7 +23,7 @@ const EditorIcon =  memo( ({ Icon, onIcon, shouldDisable, event , styles}: Edito
     return (
         <div className={`m-1 my-0 ${styles}`} onClick={e => {e.preventDefault(); if(onIcon) onIcon()}}
         >
-                  <Icon  className={(shouldDisable && shouldDisable===true ) ? 'fill-black/30 ' : 'fill-black/60 cursor-pointer pointer-events-none'}/>
+                  <Icon  className={(shouldDisable && shouldDisable===true ) ? 'fill-black/30 dark:fill-white/30 ' : 'fill-black/60 dark:fill-white cursor-pointer pointer-events-none'}/>
           </div>
         )
 });
