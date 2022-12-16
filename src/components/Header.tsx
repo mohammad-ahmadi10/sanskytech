@@ -81,7 +81,7 @@ const defaultProperties = {
       colorthemeMask.current!.style.left = "0";
 
 
-      gsap.fromTo(colorthemeMask.current, {scale:0,  borderRadius:0, opacity:1, backgroundColor: theme === "light" ? "#ffff60" : "black"}, 
+      gsap.fromTo(colorthemeMask.current, {scale:0,  borderRadius:0, opacity:1, backgroundColor: theme === "light" ? "white" : "black"}, 
       {scale: 1 , borderRadius:'50%', opacity:0, duration: 0.5, ease:"expo.inOut"
         , onComplete:onthemeChangeComplete});
 
@@ -105,7 +105,7 @@ const defaultProperties = {
       colorthemeMask.current!.classList.remove("hidden");
 
       
-          gsap.fromTo(colorthemeMask.current, {top:'-1px',  opacity:1, backgroundColor: theme === "light" ? "#ffff60" : "black"}, 
+          gsap.fromTo(colorthemeMask.current, {top:'-1px',  opacity:1, backgroundColor: theme === "light" ? "white" : "black"}, 
           { top:'50%',  opacity:1, duration: 0.25, ease:"bounce.out"
             , onComplete:_=> onBounceComplete(theme)});
       };
@@ -148,7 +148,7 @@ const defaultProperties = {
                 checked={isLightMode}
                 onChange={toggleDarkMode}
                 animationProperties={defaultProperties}
-                size={40}
+                size={25}
                 />
     
             </div>
