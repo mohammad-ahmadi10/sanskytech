@@ -143,13 +143,13 @@ interface EditorToolsType {
       }
     }
 
-   
+   /* z-[1000] */
 
   return (
-    <div className='bg-slate-200 dark:bg-transparent text-white flex flex-row 
+    <div className='bg-slate-200 dark:bg-[#2B2A33] text-white flex flex-row 
                     items-center sticky top-[34px] 
-                    sm:top-[49px]  h-10 mt-2
-                    z-[1000]
+                    sm:top-[52px]  h-12 mt-2 
+                    
                   
 
                     '

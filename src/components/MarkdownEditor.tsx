@@ -10,6 +10,7 @@ import { beforeAfterSelection, exsitsRef } from '@/src/utils/utilities';
 import styles from "@/styles/MarkEditor.module.scss";
 import CreatableSelect  from '@/src/components/CostumSelect';
 import { GlobalContext } from '../context/state';
+import { ReactNode } from 'react';
 
 
 const Editor = ({onEdit , value}:EditorType) => {
@@ -237,8 +238,43 @@ const Editor = ({onEdit , value}:EditorType) => {
     linesContainer.current!.scrollTop = e.currentTarget.scrollTop;
   }
 
+
+  const RenderInput = ({children}:{children:ReactNode}) =>{
+    return <div className={"w-full my-5"}>
+              {children}
+    </div>
+  }
+
   return (
-    <div className='w-full '>
+    <div className='w-full'>
+
+
+          <RenderInput>
+            <label className="label">
+              <span className="label-text">Title</span>
+            </label>
+            <input type="text" placeholder="give a title for this blog" className="input-md w-full" />
+            </RenderInput>
+
+            <RenderInput>
+              <label className="label">
+                <span className="label-text">Description</span>
+              </label>
+              <input type="text" placeholder="give a title for this blog" className="input-md w-full" />
+              <label className="label ">
+                <span className="label-text-alt  text-[#000]/50 dark:text-[#fff]/40">short snippet for the blog</span>
+              </label>
+            </RenderInput>
+
+            <RenderInput>
+              <input type="file"  />
+            </RenderInput>
+
+
+          <div id='tagcontainer' className={`flex flex-col  ${shouldSelectDisapear ? "hidden" : "block"}`}>
+            <CreatableSelect/>
+          </div>
+      
 
       <IconContext.Provider value={{size:"20"}}>
       <EditorTools 
@@ -252,11 +288,6 @@ const Editor = ({onEdit , value}:EditorType) => {
           /> 
           </IconContext.Provider>
 
-      <div id='tagcontainer' className={`flex flex-col  ${shouldSelectDisapear ? "hidden" : "block"}`}>
-        
-        <CreatableSelect/>
-      </div>
-      
       <div className=' 
                       box-border flex leading-5  sm:leading-8   md:leading-10 
                       shadow-lg border border-slate-900 border-solid border-t-0'>

@@ -15,36 +15,23 @@ export  default () => {
     const themeContext = useContext(GlobalContext);
   let colourStyles  : StylesConfig<TagOption , true>;
 
+  const onMenuOpen = () => {
+  }
+
     colourStyles = {
       control: (styles, cx) => ({ ...styles }),
       
       option: (styles, { data, isDisabled, isFocused, isSelected }) => {
         return {
           ...styles,
-          position: "relative",
-          zIndex:0,
-          /* color: isDisabled
-            ? '#ccc'
-            : isSelected
-            ? chroma.contrast(color, 'white') > 2
-              ? 'white'
-              : 'black'
-            : data.color,
-          cursor: isDisabled ? 'not-allowed' : 'default', */
-    
-          /* ':active': {
-            ...styles[':active'],
-            backgroundColor: !isDisabled
-              ? isSelected
-                ? data.color
-                : color.alpha(0.3).css()
-              : undefined,
-          }, */
+          color: themeContext.defaultTheme === "light" ? "black" : "white",
+          ":hover": {
+            backgroundColor: themeContext.defaultTheme === "light" ? "black" : "white",
+            color: themeContext.defaultTheme === "light" ? "white" : "black",
+          },
+          
         };
-      },
-      menuPortal: base => ({ ...base, zIndex: 1, position: "absolute", top: "0", left: "0"}),
-      menu: base => ({ ...base, zIndex: 1, position: "absolute", top: "0", left: "0"}),
-      container: base => ({ ...base, zIndex: 1, position: "relative", top: "0", left: "0"})
+      }
      
     };
 
@@ -53,40 +40,44 @@ export  default () => {
 
 
     return ( 
-      <>
+      <div className="w-full">
+        <label className="label" htmlFor="long-value-select">
+        <span className="label-text">Tags</span>
+        </label>
+
     <Select
       id="long-value-select" instanceId="long-value-select"
-                closeMenuOnSelect={false}
+      closeMenuOnSelect={false}
                 //menuPortalTarget={document.body}
                 defaultValue={[TagOptions[0], TagOptions[1]]}
                 isMulti
                 options={TagOptions}
                 
 
-/*                 styles={colourStyles} */
-/*                 className="costum-select-container"
-                classNamePrefix={"costum-select"} */
+                styles={colourStyles}
+
+
                 theme={theme => ({...theme,
                   colors:{
                     ...theme.colors,
-                    neutral0: themeContext.defaultTheme === "light" ? "white" : "#4d4d4d",
-                    neutral5: themeContext.defaultTheme === "light" ? "black" : "white",
+                    neutral0: themeContext.defaultTheme === "light" ? "white" : "#2B2A33",
+/*                     neutral5: themeContext.defaultTheme === "light" ? "black" : "white", */
                     neutral10: themeContext.defaultTheme === "light" ? "#e6e6e6" : "#666666", // single container background
-                    neutral20: themeContext.defaultTheme === "light" ? "black" : "white",
-                    neutral30: themeContext.defaultTheme === "light" ? "black" : "white",
-                    neutral40: themeContext.defaultTheme === "light" ? "black" : "white",
-                    neutral50: themeContext.defaultTheme === "light" ? "black" : "white",
-                    neutral60: themeContext.defaultTheme === "light" ? "black" : "white",
+                    neutral20: themeContext.defaultTheme === "light" ? "#d5d7d2" : "#ffffff53",
+/*                     neutral30: themeContext.defaultTheme === "light" ? "black" : "white",
+                    neutral40: themeContext.defaultTheme === "light" ? "black" : "white", */
+                    neutral50: themeContext.defaultTheme === "light" ? "#b6b7b5" : "white",
+/*                     neutral60: themeContext.defaultTheme === "light" ? "black" : "white",
                     neutral70: themeContext.defaultTheme === "light" ? "black" : "white",
                     neutral80: themeContext.defaultTheme === "light" ? "black" : "white",
-                    neutral90: themeContext.defaultTheme === "light" ? "black" : "white",
+                    neutral90: themeContext.defaultTheme === "light" ? "black" : "white", */
                     
-                    primary25: themeContext.defaultTheme === "light" ? "black" : "white",
-                    primary50: themeContext.defaultTheme === "light" ? "black" : "white",
+                    primary25: "transparent" ,
+                   primary50: themeContext.defaultTheme === "light" ? "black" : "white",
                     primary: themeContext.defaultTheme === "light" ? "black" : "white",
                     primary75: themeContext.defaultTheme === "light" ? "black" : "white",
                     primary90: themeContext.defaultTheme === "light" ? "black" : "white",
-                    primary95: themeContext.defaultTheme === "light" ? "black" : "white",
+                     primary95: themeContext.defaultTheme === "light" ? "black" : "white",
                   },
                   borderRadius: 0,
                   spacing: {
@@ -94,11 +85,12 @@ export  default () => {
                     controlHeight: 50,
                     menuGutter: 0,
                   }
-              })}
+                })}
 
                 placeholder="Select Tags for this blog..." 
-      />
-      </>
+                onMenuOpen={onMenuOpen}
+                />
+      </div>
       )
 
     };
