@@ -141,7 +141,7 @@ const defaultProperties = {
 
             <div className='flex w-full justify-end relative justify-center items-center m-0 mr-auto'>
     
-            <div className='m-auto mr-0'>
+            <div className='m-auto mr-0 sticky t-0'>
             
             <DarkModeSwitch
                 style={{ margin: '1rem' }}

@@ -192,26 +192,26 @@ interface EditorToolsType {
 <input onClick={_ => onSelectChange()} type="checkbox" id="image-popup" className="modal-toggle" />
 <label htmlFor="image-popup" className="modal cursor-pointer">
   <label className="modal-box relative" htmlFor="">
-    <label htmlFor="url" className="text-md label-text font-bold">put the url of the Image</label>
-    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={imgUrlRef} id="url" type="text" defaultValue={"https://"} placeholder="https://" required className="input w-full max-w-lg h-min" />
+    <label htmlFor="url" className="text-md label-text font-bold ">put the url of the Image</label>
+    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={imgUrlRef} id="url" type="text" defaultValue={"https://"} placeholder="https://" required className="input w-full max-w-lg h-min input-bordered" />
     <label htmlFor="url" className="text-md label-text font-bold">Alt of Image</label>
-    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={altRef} id="url" type="text" defaultValue={"image"} placeholder="image" className="input w-full max-w-lg h-min" />
+    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={altRef} id="url" type="text" defaultValue={"image"} placeholder="image" className="input w-full max-w-lg h-min input-bordered" />
     <div className="flex align-center justify-between">
       <div>
     <label htmlFor="width" className="label-text label text-md font-bold">Width</label>
-    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={widthRef} id="width" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20" />
+    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={widthRef} id="width" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20 input-bordered" />
       </div>
     <div className="mb-2">
 
     <label htmlFor="height" className="label-text label text-md font-bold">height</label>
-    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={heightRef} id="height" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20" />
+    <input onChange={e=> shouldImgBtnDisabled(e.currentTarget.value)} ref={heightRef} id="height" type="text" defaultValue={250} placeholder="250" className="input input-xs w-20 input-bordered" />
     </div>
     <div></div>
     </div>
 
     {/* radio  */}
 
-      <div ref={imagePos} className="form-control " style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
+      <div ref={imagePos} className="form-control my-5" style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
         <label className="label cursor-pointer w-20">
           <span className="label-text">Left</span> 
           <input onChange={console.log} type="radio" name="radio-10" className="radio checked:bg-blue-500"  checked />
@@ -231,7 +231,7 @@ interface EditorToolsType {
     <button
      disabled={isImgBtnDisabled}
      id="add-image"
-     className="btn btn-active btn-accent" onClick={onImageAdd}>Add Image</button>
+     className="btn btn-sm btn-active btn-accent" onClick={onImageAdd}>Add Image</button>
   </label>
 </label>
   </div>
@@ -241,15 +241,15 @@ interface EditorToolsType {
     <input onClick={_ => onSelectChange()} type="checkbox" id="youtube-popup" className="modal-toggle" />
 <label htmlFor="youtube-popup" className="modal cursor-pointer">
   <label className="modal-box relative" htmlFor="">
-    <label htmlFor="url" className="text-md label-text text-white font-bold">put the url of the video</label>
+    <label htmlFor="url" className="text-md label-text text-white dark:text-white font-bold">put the url of the video</label>
     <input onChange={e=> shouldYoutubeBtnDisabled(e.currentTarget.value)} ref={youtubeUrlRef} 
       id="url" type="text" defaultValue={"https://www.youtube.com/watch?v="} placeholder="https://www.youtube.com/watch?v="
-     required className="input w-full max-w-lg h-min mt-5 " />
+     required className="input w-full max-w-lg h-min mt-5 input-bordered text-black dark:text-white" />
 
     <button
      disabled={isYoutubeBtnDisabled}
      id="add-youtube"
-     className="btn btn-active btn-accent mt-5" onClick={onYoutubeAdd}>Add Youtube</button>
+     className="btn btn-sm btn-active btn-accent mt-5" onClick={onYoutubeAdd}>Add Youtube</button>
   </label>
 </label>
 

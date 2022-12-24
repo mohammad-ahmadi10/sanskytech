@@ -40,3 +40,12 @@ export type CommandType ={
   value: string,
   selectedRange: [number , number]
 }
+
+export type fileType ={
+  lastModified?: number
+  fileName?: string
+  ​path?: string
+  size: number
+  ​type: string​
+  webkitRelativePath?: string
+}

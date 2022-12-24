@@ -16,6 +16,7 @@
 
 .dropdown {
     position: relative;
+    padding-left: 10px;
     &:hover .dropdownContent {
         display: flex;
         flex-direction: column;

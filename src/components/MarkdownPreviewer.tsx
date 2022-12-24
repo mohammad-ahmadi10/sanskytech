@@ -11,7 +11,7 @@ import YouTube from './../utils/Youtube';
 const MarkdownPreviewer = ({value}:MarkDownPreviewerType) => {
 
   return (
-    <div className={`text-black p-2 border-t-2 border-cyan-500 mt-4 bg-white border border-slate-900 border-solid border-t-0 
+    <div className={`text-black p-2 py-5 border-t border-black dark:border-slate-200 bg-white border border-slate-800 border-solid 
                      dark:text-white dark:bg-black`}>
        {
         typeof value !== "undefined" ? 

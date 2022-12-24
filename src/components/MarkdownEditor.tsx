@@ -11,6 +11,7 @@ import styles from "@/styles/MarkEditor.module.scss";
 import CreatableSelect  from '@/src/components/CostumSelect';
 import { GlobalContext } from '../context/state';
 import { ReactNode } from 'react';
+import Dropzone from "./CostumDropzone";
 
 
 const Editor = ({onEdit , value}:EditorType) => {
@@ -246,7 +247,7 @@ const Editor = ({onEdit , value}:EditorType) => {
   }
 
   return (
-    <div className='w-full'>
+    <div className='w-full border border-slate-800 p-4'>
 
 
           <RenderInput>
@@ -265,9 +266,8 @@ const Editor = ({onEdit , value}:EditorType) => {
                 <span className="label-text-alt  text-[#000]/50 dark:text-[#fff]/40">short snippet for the blog</span>
               </label>
             </RenderInput>
-
             <RenderInput>
-              <input type="file"  />
+                <Dropzone/>
             </RenderInput>
 
 
@@ -276,7 +276,6 @@ const Editor = ({onEdit , value}:EditorType) => {
           </div>
       
 
-      <IconContext.Provider value={{size:"20"}}>
       <EditorTools 
           textAreaRef={textAreaRef} 
           commandExecutor={excecuteCommand}
@@ -286,7 +285,6 @@ const Editor = ({onEdit , value}:EditorType) => {
           undoHistory={undoHistory}
           onSelectChange={onSelectChange}
           /> 
-          </IconContext.Provider>
 
       <div className=' 
                       box-border flex leading-5  sm:leading-8   md:leading-10 
